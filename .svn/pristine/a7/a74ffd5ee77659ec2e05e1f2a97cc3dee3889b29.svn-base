@@ -1,0 +1,467 @@
+//
+//  LSYPayViewController.m
+//  MarketManage
+//
+//  Created by liangsiyuan on 15/1/20.
+//  Copyright (c) 2015年 Rice. All rights reserved.
+//
+
+#import "LSYPayViewController.h"
+#import "LSYPayWayTableViewCell.h"
+#import "ZXYPaySuccessViewController.h"
+#import "LSYGoodsInfoViewController.h"
+#import "ZXYClassifierListViewController.h"
+#import "BSaveMessage.h"
+#import "shoppingCarViewController.h"
+
+@interface LSYPayViewController ()<UITableViewDelegate,UITableViewDataSource>
+{
+    ZXYCommitOrderRequestModel *commitModel;
+  
+    NSInteger saveSelectCell;
+    //购买的类型 0为存储卡 1 为信用卡 @“”为两者
+    NSString   * buyType;
+}
+@property (weak, nonatomic) IBOutlet UITableView *tablewView;
+@property (nonatomic,strong)ASIFormDataRequest * request;
+@property (weak, nonatomic) IBOutlet UIButton *confirmButton;
+//支付金额
+@property (weak, nonatomic) IBOutlet UILabel *payMenoyLabel;
+@property (copy, nonatomic) NSString *uPayResult;//u付结果
+
+
+
+@end
+
+@implementation LSYPayViewController
+
+-(void)setNavigation
+{
+    
+    buyType = @"";
+    self.mallTitleLabel.text = @"确认支付";
+    
+}
+
+- (void)leftBackCliked:(UIButton *)sender
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认放弃支付" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.tag = 2222;
+    alert.delegate = self;
+    [alert show];
+    
+//    for (UIViewController *detailVC in self.navigationController.viewControllers) {
+//    if ([detailVC isKindOfClass:[LSYGoodsInfoViewController class]]) {
+//        [self.navigationController popToViewController:detailVC animated:YES];
+//        return;
+//    }
+//    }
+//    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self setNavigation];
+    
+    [MarketAPI setGrayButton:self.confirmButton];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(judgePayStatu) name:@"judgePayStatu" object:nil];
+  
+    
+    self.tablewView.tableFooterView = [[UIView alloc] init];
+    [self.tablewView registerNib:[UINib nibWithNibName:@"LSYPayWayTableViewCell" bundle:nil] forCellReuseIdentifier:@"Cell"];
+    [self.tablewView registerNib:[UINib nibWithNibName:@"LSYPayTitleTableViewCell" bundle:nil] forCellReuseIdentifier:@"Cell2"];
+    if ([self.tablewView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tablewView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([self.tablewView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self.tablewView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    commitModel = [ZXYCommitOrderRequestModel shareInstance];
+    
+    
+    
+    if([commitModel.pay_type integerValue] == 2){
+        self.tablewView .hidden = YES;
+        [self.confirmButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.confirmButton.layer.borderWidth = 0;
+        self.confirmButton.layer.cornerRadius = 6;
+        self.confirmButton.backgroundColor =  [UIColor colorWithRed:184/255. green:6/255. blue:6/255. alpha:1];
+    }
+    
+
+    self.payMenoyLabel.text = [self.meonyStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+}
+
+- (IBAction)confirmPay:(id)sender
+{
+    if (saveSelectCell) {
+        [self startActivity];
+    }
+    if([commitModel.pay_type integerValue] == 1){
+        switch (saveSelectCell) {
+            case 0:
+            {
+                break;
+            }
+            case 1://信用卡支付
+            {
+                buyType = @"1";
+                [self requsetumpay];
+                break;
+            }
+            case 2://借记卡支付
+            {
+                buyType = @"0";
+                [self requsetumpay];
+                
+                break;
+            }
+            case 3://支付宝
+            {
+                [self requestPayOrder];
+            }
+                break;
+                
+            default:
+                break;
+        }
+
+    }else{
+     
+        [self requestPayOrder];
+    }
+}
+//订单支付请求  u付
+/*
+ order_num; 订单号
+ pay_type;  支付方式 1 现金支付宝 2 积分 3 u付
+ sign; 加密
+ */
+-(void)requsetumpay
+{
+//    [self startActivity];
+    self.request = [MarketAPI requestUfu204WithController:self commitModel:commitModel act_Id:self.act_ID];
+}
+
+//订单支付请求
+/*
+ order_num; 订单号
+ pay_type;  支付方式 1 现金 2 积分
+ sign; 加密
+ */
+-(void)requestPayOrder
+{
+//    [self startActivity];
+    self.request = [MarketAPI requesZhiFuBao204WithController:self commitModel:commitModel act_Id:self.act_ID ];
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    [self stopActivity];
+    NSString *tEndString=[[NSString alloc] initWithData:request.responseData encoding:NSUTF8StringEncoding];
+    tEndString = [tEndString stringByReplacingOccurrencesOfString:@"\n" withString:@"\n"];
+    NSDictionary * dict = [tEndString JSONValue];
+    NSLog(@"LSYGoodsInfoView::%@",dict);
+    if (!dict){
+        NSLog(@"接口错误");
+        [self showMsg:@"支付失败"];
+        return;
+    }
+    if ([dict[@"code"] integerValue] == 0 && dict[@"code"] != nil) {       
+        
+        if ([commitModel.pay_type integerValue] == 1) {//现金支付
+            
+            if (request.tag == 204) {
+                
+                NSString *orderInfor = dict[@"orderInfor"];
+                commitModel.payView = @"LaJiaoQuanApp";
+                [[AlipaySDK defaultService] payOrder:orderInfor fromScheme:ZHIFUBAOAPPSCHEME callback:^(NSDictionary *resultDic) {
+                    
+                    commitModel.payStatu = resultDic[@"resultStatus"];
+                    [self judgePayStatu];
+                }];
+            }else{
+                NSLog(@"LSYGoodsInfoView::%@",dict);
+
+                NSString *trade_no = dict[@"trade_no"];
+                
+                UmpayElements* inPayInfo = [[UmpayElements alloc]init];
+                [inPayInfo setIdentityCode:@""];
+                [inPayInfo setEditFlag:@"1"];
+                [inPayInfo setCardHolder:@""];
+                [inPayInfo setMobileId:@""];
+                
+                [Umpay pay:trade_no merCustId:@"GoodStudy" shortBankName:@"" cardType:buyType payDic:inPayInfo rootViewController:self delegate:self];
+                
+            }
+            
+            
+        }else{//积分支付
+            ZXYPaySuccessViewController *paySuccessVC = [[ZXYPaySuccessViewController alloc] init];
+            paySuccessVC.goodsInfo = self.goodsInfo;
+            [self.navigationController pushViewController:paySuccessVC animated:YES];
+        }
+        
+    }else if([dict[@"code"] integerValue] == 30){
+        
+        [self showMsg:@"支付超时，订单已被取消"];
+        [self  performSelector:@selector(jumDingdanlieBiao) withObject:self afterDelay:1];
+        
+    }else if([dict[@"code"] integerValue] == 27){
+        [self showMsg:[NSString stringWithFormat:@"%@不足", INTERGRAL_NAME]];
+    }else{
+        [self showMsg:dict[@"message"]];
+    }
+}
+
+- (void)jumDingdanlieBiao
+{
+    
+    for (UIViewController *detailVC in self.navigationController.viewControllers) {
+        if ([detailVC isKindOfClass:[ZXYOrderListViewController class]]) {
+            [self.navigationController popToViewController:detailVC animated:YES];
+            return;
+        }
+    }
+    ZXYOrderListViewController  * classifierVC = [[ZXYOrderListViewController alloc]initWithNibName:@"ZXYOrderListViewController" bundle:nil];
+    [self.navigationController pushViewController:classifierVC animated:YES];
+
+}
+- (void)pay:(NSString*)tradeNo{
+    
+    if (tradeNo == nil || [@"" isEqual:tradeNo]) {
+        
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入正确的订单号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        
+    }else{
+        
+        UmpayElements* inPayInfo = [[UmpayElements alloc]init];
+        [inPayInfo setIdentityCode:@""];
+        [inPayInfo setEditFlag:@"1"];
+        [inPayInfo setCardHolder:@""];
+        [inPayInfo setMobileId:@""];
+        
+        [Umpay pay:tradeNo merCustId:@"GoodStudy" shortBankName:@"" cardType:buyType payDic:inPayInfo rootViewController:self delegate:self];
+
+    }
+    
+}
+//支付回调
+- (void)onPayResult:(NSString*)orderId resultCode:(NSString*)resultCode resultMessage:(NSString*)resultMessage{
+    NSLog(@"orderId:%@,resultCode:%@,resultMessage:%@",orderId,resultCode,resultMessage);
+    
+    self.uPayResult = resultCode;
+    NSString  * titleMes =  @"";
+    if([buyType isEqualToString:@"0"]){
+        titleMes = @"借记卡";
+    }else{
+        titleMes = @"信用卡";
+
+    }
+    
+    
+    if ([resultCode isEqualToString:@"0000"]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: titleMes
+                                                        message:@"支付成功"
+                                                       delegate:self
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"确定",nil];
+        //设置标题与信息，通常在使用frame初始化AlertView时使用
+        alert.tag = 10;
+        
+        [alert show];
+        
+    }else{
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:titleMes
+                                                        message:@"支付失败"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil,nil];
+        //设置标题与信息，通常在使用frame初始化AlertView时使用
+        
+        [alert show];
+    }
+    
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 10) {
+        [self judgeUPayStatuWithCode:self.uPayResult];
+    }
+    if (alertView.tag == 2222) {
+        if (buttonIndex == 1) {
+            for (UIViewController *detailVC in self.navigationController.viewControllers) {
+                if ([detailVC isKindOfClass:[shoppingCarViewController class]]) {
+                    [self.navigationController popToViewController:detailVC animated:YES];
+                    return;
+                }
+            }
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+}
+
+-(void)judgeUPayStatuWithCode:(NSString *)code
+{
+    
+    ZXYPaySuccessViewController *paySuccessVC = [[ZXYPaySuccessViewController alloc] init];
+    if ([code isEqual:@"0000"]) {
+        paySuccessVC.goodsInfo = self.goodsInfo;
+        [self.navigationController pushViewController:paySuccessVC animated:YES];
+    }else{
+        [self showMsg:@"支付失败，请重试"];
+    }
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request;
+{
+    [self stopActivity];
+    [self showMsg:@"请求失败，请检查网路设置"];
+}
+
+-(void)judgePayStatu
+{
+    ZXYPaySuccessViewController *paySuccessVC = [[ZXYPaySuccessViewController alloc] init];
+    
+    if ([commitModel.payStatu integerValue] == 9000) {
+        paySuccessVC.goodsInfo = self.goodsInfo;
+        [self.navigationController pushViewController:paySuccessVC animated:YES];
+    }else if ([commitModel.payStatu integerValue] == 6001) {
+        [self showMsg:@"取消支付"];
+    }else if ([commitModel.payStatu integerValue] == 4000) {
+        [self showMsg:@"支付失败"];
+    }else if ([commitModel.payStatu integerValue] == 6002) {
+        [self showMsg:@"取消支付"];
+    }else{
+        [self showMsg:@"支付失败，请重试"];
+    }
+}
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if ([commitModel.pay_type integerValue] == 1) {//现金
+        return 4;
+    }else{
+        return 2;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.row == 0){
+        
+        return 45.0;
+        
+    }else{
+        
+        return 44.0;
+    }
+    
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==0) {
+        UITableViewCell * cell=[tableView dequeueReusableCellWithIdentifier:@"Cell2"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }else{
+        LSYPayWayTableViewCell * cell=[tableView dequeueReusableCellWithIdentifier:@"Cell"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        if ([commitModel.pay_type integerValue] == 1) {//现金
+            switch (indexPath.row) {
+                case 1:
+                {
+                    cell.iconImage.image = [UIImage imageNamed:@"lyq_fumall_ico_xinyonka_image"];
+                    cell.payTypeName.text = @"信用卡支付";
+                    break;
+                }
+                case 2:
+                {
+                    cell.iconImage.image = [UIImage imageNamed:@"lyq_fumall_ico_jiejika_image"];
+                    cell.payTypeName.text = @"借记卡支付";
+                    break;
+                }
+                case 3:
+                {
+                    cell.iconImage.image = [UIImage imageNamed:@"lyq_fumall_ico_zhifubao_image"];
+                    cell.payTypeName.text = @"支付宝支付";
+                }
+                    break;
+                default:
+                    break;
+            }
+        }else if ([commitModel.pay_type integerValue] == 2){//积分
+            cell.iconImage.image = [UIImage imageNamed:@"zxy_jifen_icon"];
+            cell.payTypeName.text = @"积分支付";
+        }
+        
+        return cell;
+    }
+    
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    saveSelectCell = indexPath.row;
+    if (indexPath.row > 0) {
+        LSYPayWayTableViewCell *cell = (LSYPayWayTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        cell.payStatuImage.image = [UIImage imageNamed:@"crazy_mall_pay-for_selected"];
+//        [MarketAPI setRedButton:self.confirmButton];
+        self.confirmButton.layer.cornerRadius = 6;
+        self.confirmButton.layer.borderWidth = 0;
+        [self.confirmButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.confirmButton.backgroundColor =  [UIColor colorWithRed:184/255. green:6/255. blue:6/255. alpha:1];
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row > 0) {
+        LSYPayWayTableViewCell *cell = (LSYPayWayTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        cell.payStatuImage.image = [UIImage imageNamed:@"crazy_mall_pay-for_norma"];
+    }
+}
+- (ASIFormDataRequest *)newHttpsRequestActionSetDetailWith:(NSDictionary *)dic andURLStr:(NSString *)AURLStr
+{
+    NSString *url = AURLStr;
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    /// -> 超时时间
+    request.timeOutSeconds = REQUEST_TIMEOUTSECONDS;
+    request.delegate = self;
+    /// -> 处理Https请求
+    [request setValidatesSecureCertificate:NO];
+    NSArray *key_array = [dic allKeys];
+    NSLog(@"%@\n%@",dic,key_array);
+    for (int i = 0; i<key_array.count; i++) {
+        NSString *key_string = [key_array objectAtIndex:i];
+        [request addPostValue:[dic objectForKey:key_string] forKey:key_string];
+    }
+    return request;
+}
+
+
+@end

@@ -1,0 +1,25 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "229f06a5-259f-4ed5-97f2-03be14c22470++1803",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "229f06a5-259f-4ed5-97f2-03be14c22470++1803" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "229f06a5-259f-4ed5-97f2-03be14c22470++1803" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F53675D9-D4F6-440B-A51D-C319590596EE",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "229f06a5-259f-4ed5-97f2-03be14c22470++1803" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ChillingAmend",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ChillingAmend.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "svn:\/\/192.168.10.83\/iosapp",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "229f06a5-259f-4ed5-97f2-03be14c22470++1803"
+    }
+  ]
+}

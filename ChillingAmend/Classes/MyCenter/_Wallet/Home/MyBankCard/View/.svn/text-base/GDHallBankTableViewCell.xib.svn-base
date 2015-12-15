@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="GDHallBankTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="36"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uug-IH-gQv">
+                        <rect key="frame" x="4" y="8" width="300" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="8He-Ld-wsw"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.21568627450980393" green="0.21568627450980393" blue="0.21568627450980393" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="czO-wQ-kOV">
+                        <rect key="frame" x="0.0" y="33" width="320" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="2fy-wK-yth"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="czO-wQ-kOV" secondAttribute="bottom" constant="1" id="2Mq-qE-hm0"/>
+                    <constraint firstItem="uug-IH-gQv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="8Kf-T4-gDX"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="uug-IH-gQv" secondAttribute="trailing" constant="8" id="aPW-TX-qBM"/>
+                    <constraint firstAttribute="trailing" secondItem="czO-wQ-kOV" secondAttribute="trailing" id="j7o-BB-dQn"/>
+                    <constraint firstItem="uug-IH-gQv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-4" id="tlT-W1-fHV"/>
+                    <constraint firstItem="czO-wQ-kOV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="uNn-5N-SY6"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="bankLable" destination="uug-IH-gQv" id="A1t-zI-KlG"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

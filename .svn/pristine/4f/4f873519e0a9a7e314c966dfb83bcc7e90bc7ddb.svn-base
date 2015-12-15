@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="70" id="KGk-i7-Jjw" customClass="OtherShopListTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="382" height="70"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="西城区交道口南锣鼓巷黑芝麻胡同20号" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="00C-2t-Mn2">
+                        <rect key="frame" x="8" y="30" width="257" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="Pya-dl-ZlK"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="鬼味烤翅" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qBu-RG-cP1">
+                        <rect key="frame" x="8" y="8" width="189" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="O2I-ZO-NkN"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JX3-wO-MH8">
+                        <rect key="frame" x="288" y="18" width="5" height="33"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="BH6-Vz-Z7G"/>
+                            <constraint firstAttribute="width" constant="1" id="dze-uO-eMO"/>
+                        </constraints>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dJX-fT-vrM">
+                        <rect key="frame" x="318" y="13" width="44" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="Jsm-Sa-RHf"/>
+                            <constraint firstAttribute="width" constant="44" id="i4R-uh-CGE"/>
+                        </constraints>
+                        <state key="normal" backgroundImage="mycoupon_function_btn_phone_norma.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <state key="selected" backgroundImage="mycoupon_function_btn_phone_selected.png"/>
+                        <connections>
+                            <action selector="clickTel:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="fdD-Hh-yli"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="00C-2t-Mn2" secondAttribute="bottom" constant="10" id="3GA-mf-1rk"/>
+                    <constraint firstItem="00C-2t-Mn2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="4FI-va-A82"/>
+                    <constraint firstItem="qBu-RG-cP1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="7B1-R8-NZQ"/>
+                    <constraint firstAttribute="trailing" secondItem="dJX-fT-vrM" secondAttribute="trailing" constant="20" id="7KT-Yq-xye"/>
+                    <constraint firstItem="qBu-RG-cP1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="81i-Y7-LIV"/>
+                    <constraint firstAttribute="centerY" secondItem="dJX-fT-vrM" secondAttribute="centerY" id="C6h-ET-cPd"/>
+                    <constraint firstItem="JX3-wO-MH8" firstAttribute="leading" secondItem="00C-2t-Mn2" secondAttribute="trailing" constant="10" id="KA2-MZ-IJP"/>
+                    <constraint firstAttribute="centerY" secondItem="JX3-wO-MH8" secondAttribute="centerY" id="L81-RV-d72"/>
+                    <constraint firstItem="qBu-RG-cP1" firstAttribute="width" secondItem="00C-2t-Mn2" secondAttribute="width" id="QLk-lY-93p"/>
+                    <constraint firstItem="dJX-fT-vrM" firstAttribute="leading" secondItem="JX3-wO-MH8" secondAttribute="trailing" constant="10" id="vBZ-a9-wdg"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="shopAddressLabel" destination="00C-2t-Mn2" id="V2d-im-eWn"/>
+                <outlet property="shopNameLabel" destination="qBu-RG-cP1" id="DXc-t2-xHb"/>
+            </connections>
+            <point key="canvasLocation" x="408" y="227"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="mycoupon_function_btn_phone_norma.png" width="88" height="88"/>
+        <image name="mycoupon_function_btn_phone_selected.png" width="88" height="88"/>
+    </resources>
+</document>

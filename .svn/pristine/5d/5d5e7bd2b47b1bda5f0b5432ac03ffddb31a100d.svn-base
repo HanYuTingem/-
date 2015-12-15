@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="LYSShopingCartTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="as7-Dp-d2O">
+                        <rect key="frame" x="10" y="11" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="bEl-kf-1jv"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品名称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ffj-U5-OSY">
+                        <rect key="frame" x="78" y="11" width="227" height="37"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品价格" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KpN-ZW-OQg">
+                        <rect key="frame" x="78" y="50" width="173" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.44705882349999998" green="0.44705882349999998" blue="0.44705882349999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EDu-V0-Y4b">
+                        <rect key="frame" x="270" y="51" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.44705882349999998" green="0.44705882349999998" blue="0.44705882349999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dez-gZ-FQb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
+                        <subviews>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gAo-xY-bkR">
+                                <rect key="frame" x="212" y="12" width="108" height="55"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lyq_moreShoppmall_list_content_ico.png" translatesAutoresizingMaskIntoConstraints="NO" id="25O-dw-jVs">
+                                        <rect key="frame" x="6" y="26" width="16" height="3"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="共4件商品" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMf-3H-YQ9">
+                                        <rect key="frame" x="28" y="17" width="80" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="0.1450980392" green="0.1450980392" blue="0.1450980392" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="8fh-jR-2WZ"/>
+                                    <constraint firstItem="BMf-3H-YQ9" firstAttribute="leading" secondItem="gAo-xY-bkR" secondAttribute="leading" constant="28" id="8ip-4x-uOl"/>
+                                    <constraint firstAttribute="bottom" secondItem="25O-dw-jVs" secondAttribute="bottom" constant="26" id="EvP-S3-de0"/>
+                                    <constraint firstAttribute="trailing" secondItem="25O-dw-jVs" secondAttribute="trailing" constant="86" id="JS3-QE-RDi"/>
+                                    <constraint firstItem="BMf-3H-YQ9" firstAttribute="top" secondItem="gAo-xY-bkR" secondAttribute="top" constant="17" id="Uab-7Z-i2J"/>
+                                    <constraint firstAttribute="bottom" secondItem="BMf-3H-YQ9" secondAttribute="bottom" constant="17" id="Xka-aQ-yMt"/>
+                                    <constraint firstAttribute="width" constant="108" id="Yth-qu-jaS"/>
+                                    <constraint firstItem="25O-dw-jVs" firstAttribute="leading" secondItem="gAo-xY-bkR" secondAttribute="leading" constant="6" id="gb5-e8-0Ne"/>
+                                    <constraint firstAttribute="trailing" secondItem="BMf-3H-YQ9" secondAttribute="trailing" id="wty-00-94M"/>
+                                    <constraint firstItem="25O-dw-jVs" firstAttribute="top" secondItem="gAo-xY-bkR" secondAttribute="top" constant="26" id="ydu-Jw-BUy"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="gAo-xY-bkR" secondAttribute="bottom" constant="12" id="2NF-ZI-C7H"/>
+                            <constraint firstItem="gAo-xY-bkR" firstAttribute="leading" secondItem="dez-gZ-FQb" secondAttribute="leading" constant="212" id="BSy-3t-bMp"/>
+                            <constraint firstAttribute="trailing" secondItem="gAo-xY-bkR" secondAttribute="trailing" id="b9t-Pf-J6G"/>
+                            <constraint firstItem="gAo-xY-bkR" firstAttribute="top" secondItem="dez-gZ-FQb" secondAttribute="top" constant="12" id="n6O-aq-WyY"/>
+                        </constraints>
+                    </scrollView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="EDu-V0-Y4b" secondAttribute="trailing" constant="8" id="18o-Cj-nIw"/>
+                    <constraint firstItem="dez-gZ-FQb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="3xf-AB-gEe"/>
+                    <constraint firstItem="EDu-V0-Y4b" firstAttribute="leading" secondItem="KpN-ZW-OQg" secondAttribute="trailing" constant="19" id="BAj-gL-od7"/>
+                    <constraint firstAttribute="bottom" secondItem="as7-Dp-d2O" secondAttribute="bottom" constant="8" id="BTm-Yn-W3p"/>
+                    <constraint firstAttribute="trailing" secondItem="Ffj-U5-OSY" secondAttribute="trailing" constant="15" id="Bu1-ep-07n"/>
+                    <constraint firstAttribute="trailing" secondItem="dez-gZ-FQb" secondAttribute="trailing" id="DR4-Mh-oJl"/>
+                    <constraint firstItem="dez-gZ-FQb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Eon-WA-UXR"/>
+                    <constraint firstItem="EDu-V0-Y4b" firstAttribute="top" secondItem="Ffj-U5-OSY" secondAttribute="bottom" constant="3" id="I7t-Kn-56q"/>
+                    <constraint firstAttribute="trailing" secondItem="KpN-ZW-OQg" secondAttribute="trailing" constant="69" id="NEi-3w-OX0"/>
+                    <constraint firstItem="Ffj-U5-OSY" firstAttribute="leading" secondItem="as7-Dp-d2O" secondAttribute="trailing" constant="8" id="Zd4-Nn-62l"/>
+                    <constraint firstItem="as7-Dp-d2O" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="bLG-je-mCj"/>
+                    <constraint firstAttribute="bottom" secondItem="EDu-V0-Y4b" secondAttribute="bottom" constant="7" id="fIl-KV-XaQ"/>
+                    <constraint firstAttribute="bottom" secondItem="Ffj-U5-OSY" secondAttribute="bottom" constant="31" id="fwl-7c-xeR"/>
+                    <constraint firstItem="KpN-ZW-OQg" firstAttribute="leading" secondItem="as7-Dp-d2O" secondAttribute="trailing" constant="8" id="hVF-zO-Quq"/>
+                    <constraint firstAttribute="bottom" secondItem="dez-gZ-FQb" secondAttribute="bottom" id="qBM-d8-qum"/>
+                    <constraint firstItem="KpN-ZW-OQg" firstAttribute="top" secondItem="Ffj-U5-OSY" secondAttribute="bottom" constant="2" id="qrk-wa-pUa"/>
+                    <constraint firstItem="Ffj-U5-OSY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="rdS-PX-OfM"/>
+                    <constraint firstAttribute="bottom" secondItem="KpN-ZW-OQg" secondAttribute="bottom" constant="8" id="sBk-jJ-Tif"/>
+                    <constraint firstItem="as7-Dp-d2O" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="yDk-b2-2pM"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="goodNameLabel" destination="Ffj-U5-OSY" id="uOP-pa-oku"/>
+                <outlet property="goodPriceLabel" destination="KpN-ZW-OQg" id="wgc-Wp-eoU"/>
+                <outlet property="goodsNumber" destination="EDu-V0-Y4b" id="N27-rV-sBa"/>
+                <outlet property="goodsScrollView" destination="dez-gZ-FQb" id="DbJ-mw-AIo"/>
+                <outlet property="moreCountLabel" destination="BMf-3H-YQ9" id="2DQ-tB-6Mm"/>
+                <outlet property="moreLastView" destination="gAo-xY-bkR" id="FcL-QG-HwS"/>
+                <outlet property="oneImageView" destination="as7-Dp-d2O" id="bJ5-nL-3ZX"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="lyq_moreShoppmall_list_content_ico.png" width="12" height="2"/>
+    </resources>
+</document>

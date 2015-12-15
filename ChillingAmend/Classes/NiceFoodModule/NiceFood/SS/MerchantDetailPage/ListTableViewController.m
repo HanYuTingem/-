@@ -1,0 +1,952 @@
+//
+//  ListTableViewController.m
+//  QQList
+//
+//  Created by CarolWang on 14/11/22.
+//  Copyright (c) 2014年 CarolWang. All rights reserved.
+//
+
+#import "ListTableViewController.h"
+#import "UINavigationBar+Awesome.h"
+
+//=== Model ===
+#import "JKGroupModel.h"
+#import "JKFriendsModel.h"
+
+//==== view====
+#import "TableHeaderView.h"
+#import "HeaderView.h"
+#import "FoodShopListCell.h"
+#import "BottomBtnView.h"
+#import "FoodInfomationCell.h"
+#import "ProgramListCell.h"
+#import "FoodInfoBaseView.h"
+#import "MerchantBaseCell.h"
+#import "MapViewController.h"
+
+//=== vc ===
+#import "WriteReviewsViewController.h"
+#import "CouponDetailViewController.h"
+#import "OnlineReservationsViewController.h"
+#import "CommentTableViewController.h"
+#import "PreferentialQuanController.h"
+#import "TakeoutViewController.h"
+#import "OrderInformationViewController.h"
+
+
+
+#define NAVBAR_CHANGE_POINT 50
+#define BOTTOMHEIGHT  70       //底部导航栏的高度
+@interface ListTableViewController ()<FoodInfomationCellDelegate,UITableViewDataSource,UITableViewDelegate,HeaderViewDelegate,TableHeaderViewDelegate>
+{
+    
+    NSDictionary        * _getDic;
+    NSMutableArray      * _segTitleArray;
+    int                 _temp ;//优惠劵的个数
+    int                 _haveTel;//是否有商家电话
+    int                 _haveHourtime;//是否有营业时间
+    int                 _haveDesc;//是否有商家简介
+    NSString            * _haveSeat;//是否订座
+    NSString            * _haveTakeaway;//是否点外卖
+    int                 _haveAllsays;//是否有评论  1为存在，0为不存在
+    NSDictionary        * _merchantDictionary;//接收商户详情返回的字典
+    NSDictionary        * _merchantOrVideoDictionary;//接收是否有商品返回的字典
+    UIView              * _bottomView;
+    int                 _downloadIndex;//加载完成的标记
+}
+
+@property(nonatomic,strong)NSArray * dataArray;
+@property(nonatomic,strong)NSArray * couponArray;
+@property(nonatomic,strong)NSArray * comArray;
+
+@property(nonatomic,strong)TableHeaderView      * headerView;
+@property(nonatomic,strong)UILabel              * navTitleLabel;
+@property(nonatomic,strong)UITableView          * tableView;
+
+@property(nonatomic,strong)NSString *contentFlag;//外卖标识 0：全部  1：外卖
+
+@property(nonatomic,strong)NSArray  *channelListArray;//商品列表数组
+@property(nonatomic,strong)NSArray  *couponListArray;//优惠券数组
+
+@property(nonatomic,strong)BottomBtn * collectBtn;
+@property(nonatomic,strong)BottomBtn * shareBtn;
+
+
+@end
+
+@implementation ListTableViewController
+
+- (void)viewDidLoad {
+    
+    
+    [super viewDidLoad];
+    //    [self showStartHud];
+    self.contentFlag = @"1";
+    _downloadIndex = 0;//加载标记初始为0
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    [backView setHidden:NO];
+    titleButton.hidden = NO;
+    [self.tableView bringSubviewToFront:backView];
+    
+    /** 初始化数组 */
+    _segTitleArray          = [NSMutableArray array];
+    self.channelListArray   = [NSArray array];
+    self.couponListArray    = [NSArray array];
+    [self getMerchantOrVideo];
+    [self getMerchantData];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lookorder:) name:@"LookOrder" object:nil];
+}
+
+- (void)lookorder:(NSNotification *)obj{
+    NSDictionary *dic = obj.userInfo;
+    OrderInformationViewController *vc = [[OrderInformationViewController alloc] init];
+    vc.orderId = dic[@"orderId"];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma -mark - 创建UI
+-(void)createUITableView{
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-BOTTOMHEIGHT)];
+    ZNLog(@"tableView.frame=%@",self.tableView.frame);
+    [self.tableView setTableHeaderView:[self createTableHeadView]];//创建头
+    self.tableView.tableHeaderView.userInteractionEnabled = YES;
+    [self.view addSubview:self.tableView];
+    backView.backgroundColor = RGBACOLOR(255, 255, 255, 0);
+    [self.view addSubview:backView];
+    
+    self.tableView.sectionHeaderHeight = 50;
+    [self clipExtraCellLine:self.tableView];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.showsVerticalScrollIndicator = NO;
+    static NSString * identifier = @"FOODINFOBASECELL";
+    [self.tableView registerClass:[MerchantBaseCell class] forCellReuseIdentifier:identifier];
+}
+
+//创建底部按钮
+-(void)createBottomBtnView{
+    CGRect bottomFrame = CGRectMake(0, SCREEN_HEIGHT-BOTTOMHEIGHT, SCREEN_WIDTH, BOTTOMHEIGHT);
+//    _bottomView = [[BottomBtnView alloc]initWithFrame:bottomFrame andCollectStatus:[_merchantDictionary objectForKey:@"collectStatus"]];
+    
+    _bottomView = [[UIView alloc]initWithFrame:bottomFrame];
+    UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, bottomFrame.size.height)];
+    imageView.image = [UIImage imageNamed:@"msxq_0003_content_tab_bg.png"];
+    imageView.backgroundColor = [UIColor clearColor];
+    [_bottomView addSubview:imageView];
+    
+    NSInteger btnCount = 2;
+    CGFloat btnW = 24;
+    CGFloat startX = (SCREEN_WIDTH - btnCount*btnW - (btnCount-1)*RECTFIX_WIDTH(30))/2;
+    
+    //收藏
+    CGRect btnFrame = CGRectMake(0*(RECTFIX_WIDTH(30)+btnW)+startX,10, btnW, 50);
+    self.collectBtn = [[BottomBtn alloc]initWithFrame:btnFrame];
+    [self.collectBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    //设置图片
+    [self.collectBtn setImage:[UIImage imageNamed:@"msxq_0002_tab_icon1_selected.png"] forState:UIControlStateSelected];
+    [self.collectBtn setImage:[UIImage imageNamed:@"msxq_0002_tab_icon1.png"] forState:UIControlStateNormal];
+    
+    //staus:收藏状态 1已收藏 0 未收藏
+    if ([[_merchantDictionary objectForKey:@"collectStatus"] intValue]==1) {
+        self.collectBtn.selected = YES;
+    }else{
+        //未收藏
+        self.collectBtn.selected = NO;
+    }
+    
+    
+    [self.collectBtn setTitle:@"收藏" forState:UIControlStateNormal];
+    self.collectBtn.tag = 3000;
+    [self.collectBtn addTarget:self action:@selector(clickCollectionBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_bottomView addSubview:self.collectBtn];
+    
+    CGRect btnFrame1 = CGRectMake(1*(RECTFIX_WIDTH(30)+btnW)+startX,10, btnW, 50);
+    self.shareBtn = [[BottomBtn alloc]initWithFrame:btnFrame1];
+    [self.shareBtn setImage:[UIImage imageNamed:@"msxq_0001_tab_icon2.png"] forState:UIControlStateNormal];
+    [self.shareBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.shareBtn setTitle:@"分享" forState:UIControlStateNormal];
+    self.shareBtn.tag = 3001;
+    [self.shareBtn addTarget:self action:@selector(clickShareBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_bottomView addSubview:self.shareBtn];
+    
+    [self.view addSubview: _bottomView];
+}
+
+//创建TableHeaderView
+-(TableHeaderView *)createTableHeadView{
+    CGRect headerViewFrame = CGRectMake(0, 0, SCREEN_WIDTH, 300);
+    GetMerOrVideoModel * getMerModel = [GetMerOrVideoModel objectWithKeyValues:_merchantOrVideoDictionary];
+    self.headerView = [[TableHeaderView  alloc]initWithHeaderViewFrame:headerViewFrame andModel:getMerModel];
+    self.headerView.userInteractionEnabled = YES;
+    self.headerView.deleagte = self;
+    self.headerView.backgroundColor = [UIColor cyanColor];
+    return self.headerView;
+}
+
+
+
+
+
+
+#pragma -mark -请求数据
+/**   根据商家ID查询是否有商品和视频  */
+-(void)getMerchantOrVideo{
+    NSString * str = [NSString  stringWithFormat:@"%@",NFM_URL];
+    NSDictionary *parameter = @{@"ownerId":_ownerId};
+    NSDictionary *dic = @{@"method":GET_DISHESBYBUSINESSID,@"json":[parameter JSONRepresentation]};
+    [AFRequest GetRequestWithUrl:str parameters:dic andBlock:^(id Datas, NSError *error) {
+        //[self stopHud:@""];
+        ZNLog(@"是否有商品和视频=%@",Datas);
+        if (error == nil) {
+            _merchantOrVideoDictionary = Datas;
+            NSString * state = [_merchantOrVideoDictionary objectForKey:@"state"];
+            if ([state intValue] == 1) {
+                [self getChannelAndContent];
+            }
+        }else{
+            [self stopHud:@""];
+            [self showMsg:@"加载失败"];
+        }
+    }];
+}
+
+/**   获取商户详情界面数据  */
+-(void)getMerchantData{
+    [self showStartHud];
+    NSString * str  = [NSString stringWithFormat:@"%@",NFM_URL];
+    NSDictionary *parameter = @{@"ownerId":_ownerId,@"oId":HUserId,@"proIden":PROIDEN};
+    NSDictionary *dic = @{@"method":GET_BUSINESSINFO,@"json":[parameter JSONRepresentation]};
+    
+    [AFRequest GetRequestWithUrl:str parameters:dic andBlock:^(id Datas, NSError *error) {
+        ZNLog(@"商户详情=%@",Datas);
+        if (error == nil) {
+            ZNLog(@"Datas=%@",Datas);
+            [self stopHud:@""];
+            _merchantDictionary  = Datas;
+            /**  Json转Model */
+            MerchantModel * merchantModel = [MerchantModel objectWithKeyValues:Datas];
+            [titleButton setTitle:[Datas objectForKey:@"name"] forState:UIControlStateNormal];
+            self.couponListArray = [Datas objectForKey:@"couponList"];
+            
+            _temp = (int)self.couponListArray.count;
+            _haveSeat = [Datas objectForKey:@"provideServiceOrder"];
+            _haveTakeaway = [Datas objectForKey:@"provideServiceTakeout"];
+            
+            //1标识存在字符串  0标识不存在字符串，则隐藏
+            _haveAllsays = [MyUtils isCharacter:merchantModel.customerName];
+            _haveTel = [MyUtils isCharacter:merchantModel.phone];
+            _haveHourtime = [MyUtils isCharacter:merchantModel.hourstime];
+            _haveDesc = [MyUtils isCharacter:merchantModel.businessDesc];
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                // 耗时的操作
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    // 更新界面
+                    [self createUITableView];
+                    [self createBottomBtnView];
+                    self.headerView.merchantModel = [MerchantModel objectWithKeyValues:Datas];
+                });
+            });
+        }else{
+            [self stopHud:@""];
+            [self showMsg:@"商户详情加载失败"];
+        }
+    }];
+}
+
+
+
+//获取商品及列表
+-(void)getChannelAndContent{
+    [self showStartHud];
+    NSString * str = [NSString  stringWithFormat:@"%@",NFM_URL];
+    NSDictionary *parameter = @{@"ownerId":self.ownerId,@"contentFlag":self.contentFlag};//
+    NSDictionary *dic = @{@"method":GET_CHANNELANDCONTENT,@"json":[parameter JSONRepresentation]};
+    [AFRequest GetRequestWithUrl:str parameters:dic andBlock:^(id Datas, NSError *error) {
+        [self stopHud:@""];
+        _downloadIndex += 1;
+        ZNLog(@"商品列表=%@",Datas);
+        if (error == nil) {
+            [self stopHud:@""];
+            //商品列表
+            NSArray * array = [Datas objectForKey:@"channelList"];
+            self.channelListArray = array;
+        }else{
+            [self stopHud:@""];
+            [self showMsg:@"商品加载失败"];
+        }
+    }];
+}
+
+
+//懒加载
+- (NSArray *)dataArray{
+    if (!_dataArray) {
+        NSArray *array = self.channelListArray;
+        NSMutableArray *muArray = [NSMutableArray arrayWithCapacity:array.count];
+        for (NSDictionary *dict in array) {
+            JKGroupModel *groupModel = [JKGroupModel objectWithKeyValues:dict];
+            [muArray addObject:groupModel];
+        }
+        _dataArray = [muArray copy];
+    }
+    return _dataArray;
+}
+
+#pragma mark -- 点击方法
+-(void)backButtonClick{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+//跳转到个人信息界面
+-(void)clickPerson{
+    
+    
+}
+
+// 跳转到地图
+-(void)turnToMap{
+    MapViewController *mapVC = [[MapViewController alloc] init];
+    double lat = [self.headerView.merchantModel.lat doubleValue];
+    double lng = [self.headerView.merchantModel.lng doubleValue];
+    mapVC.coor = CLLocationCoordinate2DMake(lat,lng);//116.380266
+    mapVC.shopName = [_merchantDictionary objectForKey:@"name"];
+    mapVC.address = [_merchantDictionary objectForKey:@"address"];
+    [self.navigationController pushViewController:mapVC animated:YES];
+}
+
+-(void)clickCollectionBtn:(BottomBtn*)btn{
+    [self showStartHud];
+    //self.collectBtn.enabled = NO;
+    NSString * str  = [NSString stringWithFormat:@"%@",NFM_URL];
+    // 0，收藏 1，取消收藏
+    NSString * deleteFlag = self.collectBtn.selected?@"1":@"0";
+    NSDictionary * parameter = @{@"ownerId":self.ownerId,@"oId":HUserId,@"deleteFlag":deleteFlag};
+    NSLog(@"deleteFlag=%@",deleteFlag);
+    NSDictionary *dic = @{@"method":SAVEORUPDATECOLLECTION,@"json":[parameter JSONRepresentation]};
+    
+    [AFRequest GetRequestWithUrl:str parameters:dic andBlock:^(id Datas, NSError *error) {
+        ZNLog(@"收藏=%@",Datas);
+        if (error == nil) {
+            [self stopHud:@""];
+            if ([[Datas objectForKey:@"rescode"] integerValue]==0000) {
+                if (self.collectBtn.selected == 0) {
+                    [self showMsg:@"收藏成功"];
+                }else{
+                    [self showMsg:@"取消收藏成功"];
+                }
+                self.collectBtn.selected = !self.collectBtn.selected;
+                self.collectBtn.enabled = YES;
+            }
+        }else{
+            [self stopHud:@"加载失败"];
+            self.collectBtn.enabled = YES;
+        }
+    }];
+
+}
+
+-(void)clickShareBtn:(BottomBtn*)btn{
+    NSString * shopName = self.headerView.merchantModel.name;
+    NSString * address = self.headerView.merchantModel.address;
+    NSString * perConsumption = [NSString stringWithFormat:@"%d",[self.headerView.merchantModel.perConsumption intValue]];
+//    NSString * shopAreaName = [NSString stringWithFormat:@"【%@】",self.headerView.merchantModel.shopAreaName];
+    NSString * urlStr = [NSString stringWithFormat:@"%@business?merchantId=%@&productId=%@",Http,self.ownerId,PROIDEN];
+    
+    NSString *sharesina = [NSString stringWithFormat:@"我在【%@】上发现这个店，真的很不错啊，跟我一起去吧！【人均%@元】【%@】%@",shopName,perConsumption,address,urlStr];
+    NSString *shareqq = [NSString stringWithFormat:@"我发现【%@】这家店很不错，跟我一起去吧!【%@】",shopName,perConsumption];
+    NSString *shareqqZ = [NSString stringWithFormat:@"我发现【%@】这家店很不错!",shopName];
+    NSString *shareWe = [NSString stringWithFormat:@"我发现【%@】这家店很不错，跟我一起去吧!【%@】【%@】",shopName,perConsumption,address];
+    NSString *shareWecht= [NSString stringWithFormat:@"我发现【%@】这家店很不错，跟我一起去吧!【%@】【%@】",shopName,perConsumption,address];
+    
+    //分享的内容
+    NSString *imageUrl = [NSString stringWithFormat:@"%@%@",NiceFood_ImageUrl,[_merchantDictionary objectForKey:@"imageUrl"]];
+    if ([_merchantDictionary objectForKey:@"imageUrl"] == nil) {
+        imageUrl = @"";
+    }
+
+    NSString * imageIntro = self.headerView.merchantModel.businessDesc;
+    [self baseShareText:imageIntro withUrl:urlStr withContent:@"" withImageName:@"" ImgStr:imageUrl domainName:@"" withqqTitle:shareqq withqqZTitle:shareqqZ withweCTitle:shareWe withweChtTitle:shareWecht withsinaTitle:sharesina];
+}
+
+//点击信息商品等按钮的响应方法
+-(void)clickByIndex:(NSInteger)index{
+    if (index == 0) {
+        [self.tableView reloadData];
+    }
+    
+    if (index == 1) {
+        [self.tableView reloadData];        
+    }
+}
+
+//商品下的分类
+- (void)clickView{
+    [self.tableView reloadData];
+}
+
+
+#pragma mark - view cycle
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self scrollViewDidScroll:self.tableView];
+    self.navigationController.navigationBarHidden = YES;
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    self.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-BOTTOMHEIGHT);
+}
+
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    switch (self.headerView.control.selectedSegmentIndex) {
+        case 0:
+        {
+           return 1;
+        }
+            break;
+        case 1:
+        {
+            return self.dataArray.count;
+        }
+            break;
+        case 2:
+        {
+            return 1;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    return 0;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    switch (self.headerView.control.selectedSegmentIndex) {
+        case 0:
+        {
+            return 8;
+        }
+            break;
+        case 1:
+        {
+            JKGroupModel *groupModel = self.dataArray[section];
+            NSInteger count = groupModel.isOpen ? groupModel.channelContentList.count : 0;
+            return count;
+        }
+            break;
+        case 2:
+        {
+            return 3;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    return 0;
+    
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (self.headerView.control.selectedSegmentIndex == 0) {
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        switch (indexPath.row) {
+            case 0:
+            {                
+                MerchantBaseCell * cell = [MerchantBaseCell cellWithTableView:self.tableView];
+                
+                if ([_haveSeat isEqualToString:@"0"]) {
+                    [cell reshTabelViewCell:@"我要订座" andImage:@"meishi_list_icon_ding.png"];
+                    cell.otherLabel.hidden = NO;
+                    cell.otherLabel.text = @"马上有座";
+                    cell.arrowImgView.hidden = NO;
+                }
+
+                return cell;
+            }
+                break;
+                
+            case 1:
+            {                
+                MerchantBaseCell * cell = [MerchantBaseCell cellWithTableView:self.tableView];
+                if ([_haveTakeaway isEqualToString:@"0"]) {
+                    [cell reshTabelViewCell:@"我要点外卖" andImage:@"meishi_list_icon_wai.png"];
+                    cell.otherLabel.hidden = NO;
+                    cell.otherLabel.text = [NSString stringWithFormat:@"%d元起送",[[_merchantDictionary objectForKey:@"sendMoney"]intValue]];
+                    cell.arrowImgView.hidden = NO;
+                }
+
+                return cell;
+            }
+                break;
+                
+            case 2:
+            {
+                static NSString * identifier = @"FOODINFOHUICELL";
+                [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:identifier];
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
+                                         identifier];
+                if (cell == nil) {
+                    cell = [[UITableViewCell alloc]
+                            initWithStyle:UITableViewCellStyleDefault
+                            reuseIdentifier:identifier];
+                }
+                cell.backgroundColor = RGBACOLOR(224, 224, 224, 1);
+                CGRect baseViewFrame = CGRectMake(0, 0, SCREEN_WIDTH, 70);
+                //当参数存在时。优惠券存在
+                if (_temp >= 1)
+                {
+                    FoodInfoBaseView * baseView = [[FoodInfoBaseView alloc]initWithFoodInfoBaseViewFrame:baseViewFrame];
+                    baseView.iconView.image = [UIImage imageNamed:@"meishi_list_icon_hui.png"];
+                    baseView.couponListView.shopName.text = self.headerView.merchantModel.name;
+                    baseView.couponListView.coupontimeLabel.text = [NSString stringWithFormat:@"%@至%@",[self.couponListArray[0] objectForKey:@"validBeginTime"],[self.couponListArray[0] objectForKey:@"validEndTime"]];
+                    baseView.couponListView.descLabel.text = [self.couponListArray[0] objectForKey:@"couponName"];
+                    [cell.contentView addSubview:baseView];
+                    UIButton *basetTon = [UIButton buttonWithType:UIButtonTypeCustom];
+                    basetTon.frame = baseViewFrame;
+                    [basetTon addTarget:self action:@selector(pushOther:) forControlEvents:UIControlEventTouchUpInside];
+                    basetTon.tag = 5214;
+                    [cell.contentView addSubview:basetTon];
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    if (_temp >= 2) //当优惠券数为2或更多时，tem从0开始
+                    {
+                        UIView *lanView = [[UIView alloc] initWithFrame:CGRectMake(30, 70, SCREEN_WIDTH-60, 1)];
+                        lanView.backgroundColor = [UIColor lightGrayColor];
+                        [cell.contentView addSubview:lanView];
+                        FoodInfoBaseView * baseView = [[FoodInfoBaseView alloc]initWithFoodInfoBaseViewFrame:CGRectMake(0,71 , SCREEN_WIDTH, 70)];
+                        
+                        baseView.couponListView.shopName.text = self.headerView.merchantModel.name;
+                        baseView.couponListView.coupontimeLabel.text = [NSString stringWithFormat:@"%@至%@",[self.couponListArray[1] objectForKey:@"validBeginTime"],[self.couponListArray[1] objectForKey:@"validEndTime"]];
+                        baseView.couponListView.descLabel.text = [self.couponListArray[1] objectForKey:@"couponName"];
+                        [cell.contentView addSubview:baseView];
+                        UIButton *basetTond = [UIButton buttonWithType:UIButtonTypeCustom];
+                        basetTond.frame = CGRectMake(0,71 , SCREEN_WIDTH, 70);
+                        [basetTond addTarget:self action:@selector(pushOther:) forControlEvents:UIControlEventTouchUpInside];
+                        basetTond.tag = 5215;
+                        [cell.contentView addSubview:basetTond];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        if (_temp>2)//当优惠券大于2.添加更多按钮
+                        {
+                            UIButton *moreButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                            moreButton.frame = CGRectMake(0, 141, SCREEN_WIDTH, 36);
+                            [moreButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                            [moreButton setTitle:[NSString stringWithFormat:@"更多%lu个优惠券>>",(unsigned long)self.couponListArray.count-2] forState:UIControlStateNormal];
+                            moreButton.titleLabel.font = [UIFont systemFontOfSize: 13.0];
+                            [moreButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                            [moreButton addTarget:self action:@selector(moreButtonCliclke:) forControlEvents:UIControlEventTouchUpInside];
+                            [cell.contentView addSubview:moreButton];
+                            
+                        }
+                    }
+                    
+                }
+                
+                return cell;
+            }
+                break;
+                
+            case 3:
+            {
+                /**   商户详情页的一个评论  */
+                static NSString * identifier = @"FOODINFOMATIONCELL";
+                [self.tableView registerClass:[FoodInfomationCell class] forCellReuseIdentifier:identifier];
+                
+                FoodInfomationCell *foodCell = [FoodInfomationCell cellWithTableView:tableView];
+                if (_haveAllsays == 1) {
+                    //[foodCell reshTabelViewCell:self.headerView.merchantModel];
+                }
+                return foodCell;
+                
+            }
+                break;
+            case 4:
+            {
+                /**   商户详情页的商户信息 */
+                MerchantBaseCell *cell = [MerchantBaseCell cellWithTableView:tableView ];
+                [cell reshTabelViewCell:@"商户信息" andImage:@"msxq_0007_content_icon1.png"];
+                return cell;
+            }
+                break;
+            case 5:
+            {
+                MerchantBaseCell *cell = [MerchantBaseCell cellWithTableView:tableView];
+                NSString * str = [NSString stringWithFormat:@"%@",self.headerView.merchantModel.phone];
+                if (_haveTel == 1) {
+                    [cell reshTabelViewCell:str andImage:@"msxq_0006_content_incon_tel.png"];
+                }
+                return cell;
+                
+            }
+                break;
+            case 6:
+            {
+                MerchantBaseCell *cell = [MerchantBaseCell cellWithTableView:tableView];
+                if (_haveHourtime == 1) {
+                    [cell reshTabelViewCell:self.headerView.merchantModel.hourstime andImage:@"msxq_0005_content_icon_shijian.png"];
+                }
+                return cell;
+            }
+                break;
+            case 7:
+            {
+                MerchantBaseCell *cell = [MerchantBaseCell cellWithTableView:tableView ];
+                if (_haveDesc == 1) {
+                    [cell reshTabelViewCell:self.headerView.merchantModel.businessDesc andImage:@"msxq_0004_content_icon_jianjie.png"];
+                }
+                return cell;
+            }
+                break;
+            default:
+                break;
+        }
+    }
+    
+    if (self.headerView.control.selectedSegmentIndex == 1) {
+        static NSString * foodShopCellID = @"FOODSHOPCELLID";
+        [self.tableView registerClass:[FoodShopListCell class] forCellReuseIdentifier:foodShopCellID];
+        JKGroupModel *groupModel    = self.dataArray[indexPath.section];
+        FoodShopListCell * foodShopListCell = [FoodShopListCell cellWithTableView:tableView];
+        foodShopListCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        foodShopListCell.channelContentListModel = groupModel.channelContentList[indexPath.row];
+        return foodShopListCell;
+    }
+    
+    /**  视频选项  */
+    if (self.headerView.control.selectedSegmentIndex == 2) {
+        static NSString * foodShopCellID = @"PROGRAMLISTCELL";
+        [self.tableView registerClass:[ProgramListCell class] forCellReuseIdentifier:foodShopCellID];
+        ProgramListCell * programListCell = [ProgramListCell cellWithTableView:tableView];
+        
+        return programListCell;
+        
+    }
+    return nil;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    switch (self.headerView.control.selectedSegmentIndex) {
+        case 0:
+        {
+            if (indexPath.row == 0) {
+                if ([_haveSeat isEqualToString:@"0"]) {
+                    return 40;
+                }
+                return 0;
+                
+            }
+            
+            if (indexPath.row == 1) {
+                if ([_haveTakeaway isEqualToString:@"0"]) {
+                    return 40;
+                }
+                return 0;
+            }
+            
+            
+            if (indexPath.row == 2) {
+                if (_temp==0) {
+                    return 0;
+                }else if (_temp==1) {
+                    return 70;
+                }else if( _temp == 2){
+                    return 142;
+                }else{
+                    return 180;
+                }
+                
+            }
+            
+            if(indexPath.row == 3){
+                //                if (_haveAllsays == 1) {
+                //                    /**  大家都在说高度 */
+                //                    CGFloat height = [GCUtil sizeWithString:self.headerView.merchantModel.commentContent font:12.0f maxSize:CGSizeMake(SCREEN_WIDTH-90, MAXFLOAT)].height;
+                //                    CGFloat returnHeight = 70;
+                //                    if (height<30) {
+                //                        returnHeight = 90;
+                //                    }else{
+                //                        returnHeight = height + 40;
+                //                    }
+                //                    return returnHeight;
+                //                }
+                return 0;
+            }
+            
+            if (indexPath.row == 4) {
+                return 40;
+            }
+            if (indexPath.row == 5) {
+                if (_haveTel == 0) {
+                    return 0;
+                }
+                return 40;
+            }
+            if (indexPath.row == 6) {
+                if (_haveHourtime == 0) {
+                    return 0;
+                }
+                return 40;
+            }
+            
+            if(indexPath.row == 7){
+                if (_haveDesc == 1) {
+                    if (self.headerView.merchantModel.businessDesc && ![self.headerView.merchantModel.businessDesc isEqualToString:@""] && self.headerView.merchantModel.businessDesc != nil) {
+                        CGFloat height = [MyUtils sizeWithString:self.headerView.merchantModel.businessDesc font:14.0f maxSize:CGSizeMake(SCREEN_WIDTH-60, MAXFLOAT)].height+2*PADDING;
+                        if (height<=20) {
+                            return 40;
+                        }
+                        return height;
+                    }
+                }
+                return 0;
+            }
+            
+        }
+            break;
+            
+        case 1:
+        {
+            JKGroupModel *groupModel    = self.dataArray[indexPath.section];
+            NSDictionary*dict = groupModel.channelContentList[indexPath.row];
+            NSString * contentStr = [dict objectForKey:@"contentDetail"];
+            CGFloat descHeight = [MyUtils sizeWithString:[dict objectForKey:@"contentDetail"] font:14.0f maxSize:CGSizeMake(SCREEN_WIDTH-80, MAXFLOAT)].height;
+            if ([contentStr isEqualToString:@""]||contentStr==nil || descHeight <= 20) {
+                return 60;
+            }else{
+                return descHeight + 40;
+            }
+            
+        }
+            break;
+        case 2:
+        {
+            return 180;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    return 0;
+}
+
+-(NSInteger)getMerchantInfoHeight{
+    NSString * timeStr = @"";
+    NSString * phoneStr = @"";
+    NSMutableArray * _picMutableArray = [NSMutableArray arrayWithObjects:@"msxq_0007_content_icon1.png", nil];
+    NSMutableArray *_contentMutableArray = [NSMutableArray arrayWithObjects:@"商户信息", nil];
+    
+    if (self.headerView.merchantModel.hourstime&&(self.headerView.merchantModel.hourstime!=nil)&&![self.headerView.merchantModel.hourstime isEqualToString:@""]) {
+        timeStr = [NSString stringWithFormat:@"%@",self.headerView.merchantModel.hourstime];
+        [_picMutableArray  addObject:@"msxq_0005_content_icon_shijian.png"];
+        [_contentMutableArray addObject:timeStr];
+    }
+    
+    if (self.headerView.merchantModel.phone&&(self.headerView.merchantModel.phone!=nil)&&![self.headerView.merchantModel.phone isEqual:@""]) {
+        phoneStr = [NSString stringWithFormat:@"%@",self.headerView.merchantModel.phone];
+        [_picMutableArray  addObject:@"msxq_0006_content_incon_tel.png"];
+        [_contentMutableArray addObject:phoneStr];
+    }
+    NSInteger  count = _contentMutableArray.count;
+    return count;
+}
+
+
+#pragma mark - UITableView delegate
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
+    switch (self.headerView.control.selectedSegmentIndex) {
+        case 0:
+        {
+            return nil;
+        }
+            break;
+        case 1:
+        {
+            HeaderView *header  = [HeaderView headerView:tableView];
+            header.delegate     = self;
+            header.groupModel   = self.dataArray[section];
+            return header;
+        }
+            break;
+        case 2:
+        {
+            return 0;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    return nil;
+    
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    switch (self.headerView.control.selectedSegmentIndex) {
+        case 0:
+        {
+            return 0;
+        }
+            break;
+        case 1:
+        {
+            return 50;
+        }
+            break;
+        case 2:
+        {
+            return 0;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    return 0;
+    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    switch (self.headerView.control.selectedSegmentIndex) {
+        case 0:
+        {
+            if (indexPath.row == 0) {
+                //判断是否登录
+                OnlineReservationsViewController * onreVC = [[OnlineReservationsViewController alloc]init];
+                onreVC.isModification   = @"1";
+                onreVC.ownerName        = self.headerView.merchantModel.name;
+                onreVC.ownerId          = self.ownerId;
+                [self.navigationController pushViewController:onreVC animated:YES];
+            }
+            
+            if (indexPath.row == 1) {
+                if ([self.headerView.merchantModel.status intValue]==0) {
+                    TakeoutViewController *TVC = [[TakeoutViewController alloc] init];
+                    //                TVC.ownerId = @"102";
+                    TVC.ownerId = self.ownerId;
+                    TVC.name = self.headerView.merchantModel.name;
+                    [self.navigationController pushViewController:TVC animated:YES];
+                }else{
+                    [self showMsg:@"商家已打烊~明天再来吧!"];
+                }
+                
+            }
+            
+            if (indexPath.row == 2) {
+//                CouponDetailViewController * couponVC = [[CouponDetailViewController alloc]init];
+//                NSLog(@"%@***%@",self.headerView.merchantModel.lat,self.headerView.merchantModel.lng);
+//                [self.navigationController pushViewController:couponVC animated:YES];
+            }
+            
+            if (indexPath.row == 3) {
+                /** 跳转到评论界面 */
+                //                CommentTableViewController * commentVC = [[CommentTableViewController alloc]init];
+                //                [self.navigationController pushViewController:commentVC animated:YES];
+            }
+            
+            if (indexPath.row == 5) {
+                NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",[_merchantDictionary objectForKey:@"phone"]];
+                BOOL b = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:str]];
+                if (b) {
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+                }else{
+                    [self showMsg:@"该设备无法拨打电话"];
+                }  
+            }
+            
+        }
+            break;
+        case 1:
+        {
+            //商品点击事件
+            
+            
+        }
+            break;
+        case 2:
+        {
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - 去掉多余的线
+- (void)clipExtraCellLine:(UITableView *)tableView{
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = [UIColor clearColor];
+    [self.tableView setTableFooterView:view];
+}
+
+#pragma mark-ios8分割线从边框顶端开始-
+-(void)viewDidLayoutSubviews
+{
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsMake(0,0,0,0)];
+    }
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];
+    }
+}
+
+
+#pragma mark-scrollviewDelegate-
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    backView.backgroundColor = RGBACOLOR(255, 255, 255, scrollView.contentOffset.y/(250-64));
+    UIColor *textColor=[UIColor colorWithRed:((250-64)-scrollView.contentOffset.y)/(250-64) green:((250-64)-scrollView.contentOffset.y)/(250-64) blue:((250-64)-scrollView.contentOffset.y)/(250-64) alpha:1];
+    [titleButton setTitleColor:textColor forState:UIControlStateNormal];
+}
+
+#pragma mark -更多优惠券
+- (void)moreButtonCliclke:(UIButton*)button{
+    PreferentialQuanController *preVC = [[PreferentialQuanController alloc] init];
+    preVC.tem = _temp;
+    preVC.proIden = PROIDEN;
+    preVC.oId = HUserId;
+    preVC.couponListArray = self.couponListArray;
+    preVC.nameShop = self.headerView.merchantModel.name;
+    preVC.ownerId = self.ownerId;
+    [self.navigationController pushViewController:preVC animated:YES];
+}
+#pragma mark -优惠跳转push
+- (void)pushOther:(UIButton*)button{
+    
+    CouponDetailViewController * couponVC = [[CouponDetailViewController alloc]init];
+    if (button.tag == 5214) {
+        couponVC.couponId = [self.couponListArray[0] objectForKey:@"couponId"];
+        couponVC.couponName = [self.couponListArray[0] objectForKey:@"couponName"];
+    }else if (button.tag == 5215){
+        couponVC.couponId = [self.couponListArray[1] objectForKey:@"couponId"];
+        couponVC.couponName = [self.couponListArray[1] objectForKey:@"couponName"];
+    }
+    couponVC.ownerId = _ownerId;
+    couponVC.oId = HUserId;
+    couponVC.proIden = PROIDEN;
+    couponVC.shopName = self.headerView.merchantModel.name;
+    [self.navigationController pushViewController:couponVC animated:YES];
+}
+
+@end

@@ -1,0 +1,41 @@
+//
+//  GDHNoMoneyView.m
+//  Wallet
+//
+//  Created by GDH on 15/11/11.
+//  Copyright (c) 2015年 Sinoglobal. All rights reserved.
+//
+
+#import "GDHNoMoneyView.h"
+
+@implementation GDHNoMoneyView
+
+-(instancetype)initWithFrame:(CGRect)frame{
+
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        UIImageView *iv = [[UIImageView alloc] init];
+        iv.center = CGPointMake(ScreenWidth * 0.5, 78 + 40);
+        iv.bounds = CGRectMake(0, 0, 89, 89);
+        iv.image = [UIImage imageNamed:@"iconfont-tixianshenhe"];
+        [self addSubview:iv];
+        
+        UILabel *noLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth/2 -[GCUtil widthOfString:@"还没有余额明细哦~" withFont:14].width/2   , 78 + 89, [GCUtil widthOfString:@"还没有余额明细哦~" withFont:14].width, 20)];
+        noLabel.font = [UIFont systemFontOfSize:14];
+        noLabel.text  =@"还没有余额明细哦~";
+        noLabel.textColor = [UIColor blackColor];
+        
+        UIButton *helpButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        helpButton.frame = CGRectMake(ScreenWidth/2 - 15, CGRectGetMaxY(noLabel.frame), 30, 20);
+        [helpButton setImage:[UIImage imageNamed:@"content_btn_link_02"] forState:UIControlStateNormal];
+        [helpButton addTarget:self action:@selector(help:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:helpButton];
+        [self addSubview:noLabel];
+    }
+    return self;
+}
+-(void)help:(UIButton *)send{
+    self.block(send);
+}
+@end

@@ -1,0 +1,45 @@
+//
+//  PrefixHeader.pch
+//  ChillingAmend
+//
+//  Created by sunsu on 15/8/25.
+//  Copyright (c) 2015年 SinoGlobal. All rights reserved.
+//
+
+#ifndef ChillingAmend_PrefixHeader_pch
+#define ChillingAmend_PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import "CCViewController.h"
+#import "NiceFoodHeader.h"
+#import "SaveMessage.h"
+#import "BXAPI.h"
+
+//------------------
+#define SP_WIDTH [UIScreen mainScreen].bounds.size.width/320
+
+#define SP_HEIGHT [UIScreen mainScreen].bounds.size.height/568
+/*
+ 商城首页的工具类
+ */
+
+#import "DHHomePageTool.h"
+#import "MarketAPI.h"
+#import "ZHButton.h"
+#import "LoginViewController.h"
+//---------------------------
+
+
+#define RGBACOLOR(r,g,b,a) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:(a)]
+
+
+#endif
+#ifdef DEBUG
+#define NSLog(...) NSLog(__VA_ARGS__)
+#define debugMethod() NSLog(@"%s", __func__)
+#else
+#define NSLog(...)
+#define debugMethod()
+#endif

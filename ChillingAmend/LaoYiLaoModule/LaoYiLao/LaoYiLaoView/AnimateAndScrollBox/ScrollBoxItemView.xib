@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="MyJ-Rj-6QM" customClass="ScrollBoxItemView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="57"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015 10.30 12:40:45" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CUY-Jz-lDf">
+                    <rect key="frame" x="160" y="36" width="130" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="Flf-nG-t8C"/>
+                        <constraint firstAttribute="width" constant="130" id="L9I-Nz-rPy"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.82583085320000005" green="0.82583085320000005" blue="0.82583085320000005" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaK-hC-hCl">
+                    <rect key="frame" x="227" y="18" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="136***8689捞到了苏泊尔电压力锅的饺子，里面还有3.88元" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yTV-cW-bgy">
+                    <rect key="frame" x="50" y="5" width="220" height="37"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="37" id="oC3-9Z-sJ3"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g3l-5k-dlO">
+                    <rect key="frame" x="40" y="56" width="240" height="1"/>
+                    <color key="backgroundColor" red="0.91346312829999998" green="0.91346312829999998" blue="0.91346312829999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="JbR-2h-h8b"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="yTV-cW-bgy" firstAttribute="top" secondItem="MyJ-Rj-6QM" secondAttribute="top" constant="5" id="5Fg-Al-2lQ"/>
+                <constraint firstAttribute="bottom" secondItem="CUY-Jz-lDf" secondAttribute="bottom" id="EAU-fB-TYJ"/>
+                <constraint firstItem="g3l-5k-dlO" firstAttribute="leading" secondItem="MyJ-Rj-6QM" secondAttribute="leading" constant="40" id="NfK-wa-eOQ"/>
+                <constraint firstAttribute="trailing" secondItem="yTV-cW-bgy" secondAttribute="trailing" constant="50" id="Tgq-ky-42P"/>
+                <constraint firstItem="yTV-cW-bgy" firstAttribute="leading" secondItem="MyJ-Rj-6QM" secondAttribute="leading" constant="50" id="aF4-aN-qma"/>
+                <constraint firstAttribute="trailing" secondItem="g3l-5k-dlO" secondAttribute="trailing" constant="40" id="lM9-7q-rBh"/>
+                <constraint firstAttribute="trailing" secondItem="CUY-Jz-lDf" secondAttribute="trailing" constant="30" id="leH-mB-uJo"/>
+                <constraint firstAttribute="bottom" secondItem="g3l-5k-dlO" secondAttribute="bottom" id="mvP-Kw-o6t"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="dateLab" destination="CUY-Jz-lDf" id="gIX-5A-vpW"/>
+                <outlet property="numberLab" destination="eaK-hC-hCl" id="6iS-dN-efL"/>
+                <outlet property="titleContentlab" destination="yTV-cW-bgy" id="7gw-dg-VQh"/>
+            </connections>
+            <point key="canvasLocation" x="386" y="400.5"/>
+        </view>
+    </objects>
+</document>

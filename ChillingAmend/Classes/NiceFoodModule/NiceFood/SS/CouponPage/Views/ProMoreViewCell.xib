@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="146" id="KGk-i7-Jjw" customClass="ProMoreViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="432" height="146"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gKN-3d-qMo">
+                        <rect key="frame" x="129" y="10" width="298" height="42"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i04-zJ-gZt">
+                        <rect key="frame" x="177" y="54" width="252" height="89"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nEi-2l-0SC">
+                        <rect key="frame" x="5" y="5" width="119" height="135"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="90" id="K99-Sd-E9Z"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="nEi-2l-0SC" secondAttribute="bottom" constant="5" id="0gK-xG-L84"/>
+                    <constraint firstItem="gKN-3d-qMo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="JB2-A4-7Sc"/>
+                    <constraint firstAttribute="bottom" secondItem="i04-zJ-gZt" secondAttribute="bottom" constant="10" id="VP5-mG-koV"/>
+                    <constraint firstItem="nEi-2l-0SC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="XgK-Bk-VBP"/>
+                    <constraint firstAttribute="trailing" secondItem="i04-zJ-gZt" secondAttribute="trailing" constant="5" id="bCX-ld-XBv"/>
+                    <constraint firstItem="i04-zJ-gZt" firstAttribute="leading" secondItem="nEi-2l-0SC" secondAttribute="trailing" constant="5" id="ff0-5O-6EJ"/>
+                    <constraint firstAttribute="trailing" secondItem="gKN-3d-qMo" secondAttribute="trailing" constant="5" id="oXd-wQ-3dh"/>
+                    <constraint firstItem="i04-zJ-gZt" firstAttribute="top" secondItem="gKN-3d-qMo" secondAttribute="bottom" id="qcf-WC-yJl"/>
+                    <constraint firstItem="gKN-3d-qMo" firstAttribute="leading" secondItem="nEi-2l-0SC" secondAttribute="trailing" constant="5" id="qcj-5j-65f"/>
+                    <constraint firstItem="gKN-3d-qMo" firstAttribute="height" secondItem="i04-zJ-gZt" secondAttribute="height" multiplier="1:2" id="raT-Yh-AwD"/>
+                    <constraint firstItem="nEi-2l-0SC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="tRX-n6-XwR"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="IBimageView" destination="nEi-2l-0SC" id="DTO-JY-0i0"/>
+                <outlet property="IBtitleLabel" destination="gKN-3d-qMo" id="QHq-H2-rbi"/>
+                <outlet property="IBxiangQinLab" destination="i04-zJ-gZt" id="avB-Wn-Ijf"/>
+            </connections>
+            <point key="canvasLocation" x="259" y="200"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -1,0 +1,145 @@
+//
+//  ActivityDetailViewController.m
+//  ChillingAmend
+//
+//  Created by 许文波 on 15/1/7.
+//  Copyright (c) 2015年 SinoGlobal. All rights reserved.
+//
+
+#import "ActivityDetailViewController.h"
+
+@interface ActivityDetailViewController() <UIWebViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UIWebView *detailWeb;
+@end
+
+@implementation ActivityDetailViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    
+    // webview
+    [_detailWeb setUserInteractionEnabled:YES];
+    _detailWeb.backgroundColor = kkDColor;
+    _detailWeb.scrollView.showsVerticalScrollIndicator = NO;
+    _detailWeb.opaque = 0;
+    _detailWeb.scalesPageToFit = YES;
+    _detailWeb.delegate = self;
+    NSLog(@"%@",self.activityUrl);
+    if (![self.activityUrl hasPrefix:@"http"]) {
+        self.activityUrl = [NSString stringWithFormat:@"http://%@", self.activityUrl];
+    }
+    
+    NSString *urlStr = [NSString stringWithFormat:@"%@?app=ios1_5&userid=%@", self.activityUrl, kkUserId];
+    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *url = [NSURL URLWithString:urlStr];
+    
+//    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?app=ios1_5&userid=%@", self.activityUrl, kkUserId]];
+    
+    NSLog(@"requestUrl = %@ content ＝%@ url ＝%@", url, _share_content, _share_url);
+    NSURLRequest* request = [NSURLRequest requestWithURL:url];
+    //加载网址
+    [_detailWeb loadRequest:request];
+    [self showMsg:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    
+    [self setNavigationBarWithState:1 andIsHideLeftBtn:NO andTitle:@"活动详情"];
+    UIColor *RightBtnTitleColor = [UIColor colorWithRed:61.0/255 green:66.0/255 blue:69.0/255 alpha:1.0];
+    [self addRightBarButtonItemWithImageName:@"" andTargate:@selector(shareBtnClick:) andRightItemFrame:CGRectMake(SCREENWIDTH - 10 - 45, 31, 60, 23) andButtonTitle:@"分享" andTitleColor:RightBtnTitleColor];
+}
+
+- (void)shareBtnClick:(id)sender
+{
+    if ([self.share_content isEqual:@""] || [self.share_url isEqual:@""]) {
+        self.shareContent = @"辣椒圈活动火热进行中，小伙伴们快来感受下~http://cqtv.sinosns.cn";
+        [self callOutShareViewWithUseController:self andSharedUrl:@"http://cqtv.sinosns.cn"];
+    } else {
+        self.shareContent = [NSString stringWithFormat:@"%@%@", self.share_content, self.self.share_url];
+        [self callOutShareViewWithUseController:self andSharedUrl:self.share_url];
+    }
+    
+}
+
+/*页面即将消失的时候进入的方法
+ */
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    NSURLCache * cache = [NSURLCache sharedURLCache];
+    [cache removeAllCachedResponses];
+    [cache setDiskCapacity:0];
+    [cache setMemoryCapacity:0];
+}
+
+#pragma webview delegate
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    [self hide];
+    [self showStringMsg:@"加载失败" andYOffset:0];
+}
+
+/*webview加载完成调用的方法
+ */
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self hide];
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    NSString* urlStr = [[request URL] absoluteString];
+    NSLog(@"detail url = %@",urlStr);
+    urlStr = [urlStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    if (!urlStr) {
+        [self hide];
+        [self showStringMsg:@"加载失败" andYOffset:0];
+        return NO;
+    }
+    return YES;
+}
+
+#pragma mark GCRequestDelegate
+- (void)GCRequest:(GCRequest *)aRequest Finished:(NSString *)aString
+{
+    NSLog(@"%@", aString);
+    [self hide];
+    NSMutableDictionary *dict = [aString JSONValue];
+    if ( !dict ) {
+        [self showStringMsg:@"网络连接失败" andYOffset:0];
+        return;
+    }
+    if ([[dict objectForKey:@"code"]isEqual:@"0"]) {
+        [GCUtil saveLajiaobijifenWithJifen:[dict objectForKey:@"jifen"]];
+    } else {
+        [self showStringMsg:[dict valueForKey:@"message"] andYOffset:0];
+    }
+}
+
+- (void)GCRequest:(GCRequest *)aRequest Error:(NSString *)aError
+{
+    [self hide];
+    NSLog(@"%@", aError);
+    [GCUtil showDxalertTitle:@"" andMessage:@"登录失败,去检查下网络设置吧~" cancel:nil andOk:@"确定"];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+
+@end

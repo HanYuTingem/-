@@ -1,0 +1,439 @@
+//
+//  NiceFoodRootViewController.m
+//  PRJ_NiceFoodModule
+//
+//  Created by 张恭豪 on 15/6/15.
+//  Copyright (c) 2015年 Mike. All rights reserved.
+//
+
+#import "NiceFoodRootViewController.h"
+#import "BackButton.h"
+#import "ShopListCell.h"
+#import "ShopListModel.h"
+#import "LoginViewController.h"
+#import "ListTableViewController.h"
+#import "SVProgressHUD.h"
+
+
+@interface NiceFoodRootViewController ()<UITableViewDelegate, UITableViewDataSource, MJRefreshBaseViewDelegate>
+
+@property (nonatomic, strong) UIView *closeview;
+@property (nonatomic, assign) NSInteger screenIndex;
+@property (nonatomic, strong) MJRefreshFooterView *footer;//下拉刷新
+@property (nonatomic, strong) MJRefreshHeaderView *header;//上拉刷新
+
+@end
+
+@implementation NiceFoodRootViewController
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    if([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
+        [GCUtil showInfoAlert:@"定位服务未开启，请打开定位服务"];
+    }
+    
+    _cloudSearch = [[BMKCloudSearch alloc]init];
+    _cloudSearch.delegate = self;
+    _pageIndex = 0;
+    _screenIndex = 0;
+    _areaArray = [NSMutableArray array];
+    _areaSecondArray = [NSMutableArray array];
+    _classArray = [NSMutableArray array];
+    _classSecondArray = [NSMutableArray array];
+    _showData = [[NSMutableArray alloc] init];
+
+    
+//    初始化翻转动画视图
+    [self addAnimationView];
+    [mainView addSubview:_animationView];
+    
+    
+//    初始化第一View
+    [self addfirstView];
+    
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, TopMenuH, self.animationView.frame.size.width, self.animationView.frame.size.height - TopMenuH) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.userInteractionEnabled = YES;
+    [_firstView addSubview:_tableView];
+    _tableView.tableFooterView = [[UIView alloc] init];
+    
+//    请求筛选列表
+    [self screenDatasRequest];
+    
+    [self close];
+    
+    [self addRefresh];
+}
+
+- (void)addRefresh{
+    _footer = [MJRefreshFooterView footer];
+    _footer.scrollView = self.tableView;
+    _footer.delegate = self;
+    _footer.tag = 901;
+    
+    
+    _header = [MJRefreshHeaderView header];
+    _header.scrollView = self.tableView;
+    _header.delegate = self;
+    _header.tag = 902;
+}
+
+
+#pragma mark -- 根据检索回调参数关闭菊花
+- (void)chrysanthemumWithBOOL:(BOOL)reg{
+    if (reg) {
+        NSLog(@"成功");
+    } else {
+        NSLog(@"失败");
+        [self chrysanthemumClosed];
+        [self open];
+        [self showMsg:@"数据加载失败"];
+    }
+}
+
+
+
+#pragma mark 开始刷新数据
+- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
+{
+
+    if (_areaIndex == 0) {
+        if (refreshView.tag == 901) {
+            _pageIndex++;
+            _searchInfo.pageIndex = _pageIndex;
+        } else {
+            _pageIndex = 0;
+            _searchInfo.pageIndex = _pageIndex;
+//            [_showData removeAllObjects];
+        }
+        BOOL reg = [_cloudSearch nearbySearchWithSearchInfo:_searchInfo];
+        [self chrysanthemumWithBOOL:reg];
+    } else {
+        if (refreshView.tag == 901) {
+            _pageIndex++;
+            _locationInfo.pageIndex = _pageIndex;
+        } else {
+            _pageIndex = 0;
+            _locationInfo.pageIndex = _pageIndex;
+//            [_showData removeAllObjects];
+        }
+        BOOL reg = [_cloudSearch localSearchWithSearchInfo:_locationInfo];
+        [self chrysanthemumWithBOOL:reg];
+    }
+    [self performSelector:@selector(doneWithView:) withObject:refreshView afterDelay:1.5];
+}
+
+#pragma mark 刷新表格并且结束正在刷新状态
+- (void)refreshViewEndRefreshing:(MJRefreshBaseView *)refreshView{
+    [refreshView endRefreshing];
+}
+
+
+- (void)doneWithView:(MJRefreshBaseView *)refreshView
+{
+    [refreshView endRefreshing];
+}
+
+- (void)close{
+    _closeview = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    [_closeview setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:_closeview];
+    [self.view bringSubviewToFront:_closeview];
+}
+
+- (void)open{
+    [_closeview removeFromSuperview];
+}
+
+- (void)getLocationNotification:(NSNotification *)notification{
+    
+    [self chrysanthemumOpen];
+    [self close];
+    _pageIndex = 0;
+    
+
+    _locationInfo = notification.userInfo[@"location"];
+    [_showData removeAllObjects];
+
+
+    BOOL reg = [_cloudSearch localSearchWithSearchInfo:_locationInfo];
+    [self chrysanthemumWithBOOL:reg];
+    
+    
+}
+
+- (void)getNearNotification:(NSNotification *)notification{
+    
+    [self chrysanthemumOpen];
+    [self close];
+    _pageIndex = 0;
+    
+    _searchInfo = notification.userInfo[@"near"];
+    [_showData removeAllObjects];
+
+ 
+    BOOL reg = [_cloudSearch nearbySearchWithSearchInfo:_searchInfo];
+    [self chrysanthemumWithBOOL:reg];
+    
+    
+}
+
+#pragma mark -- 百度云检索回调方法
+- (void)onGetCloudPoiResult:(NSArray *)poiResultList searchType:(int)type errorCode:(int)error{
+
+    if (_pageIndex == 0) {//如果页标记等于0 则为上拉刷新或第一次请求数据  
+        [_showData removeAllObjects];
+    }
+    NSLog(@"进入百度回调");
+    
+    BMKCloudPOIList *list = poiResultList[0];
+    NSArray *arr = list.POIs;
+    
+    if (arr.count == 0) {
+        [self showMsg:@"未找到当前城市的数据。"];
+    }
+    
+    for (int i = 0; i < arr.count; i++) {
+        ShopListModel *model = [ShopListModel modelWithCloudPOIInfo:arr[i]];
+        [_showData addObject:model];
+//        NSLog(@"%@ -- 惠:%d, 订:%d, 外:%d", model.name, model.provideServiceDiscount, model.provideServiceOrder, model.provideServiceTakeout);
+    }
+ 
+    [self performSelector:@selector(messageDismiss) withObject:self afterDelay:2];
+//    [self chrysanthemumClosed];
+    [self open];
+    [_tableView reloadData];
+    [_header endRefreshing];
+    [_footer endRefreshing];
+}
+
+- (void)messageDismiss {
+    [self chrysanthemumClosed];
+}
+
+
+#pragma mark -- 筛选条件请求
+- (void)screenDatasRequest{
+    
+    [self chrysanthemumOpen];
+    
+    [_areaArray addObject:@"附近"];
+    [_areaArray addObject:@"热门商区"];
+    [_areaSecondArray addObject:@[@"附近(智能排序)", @"500米", @"1000米", @"2000米", @"5000米"]];
+    
+    [_classArray addObject:@"全部分类"];
+    [_classSecondArray addObject:@[]];
+    
+    _typeArray = @[@"全部商户",@"订座商户",@"外卖商户"];
+    
+    
+    NSDictionary *par = [Parameter getAreaAndShopAreaWithCityId:City_Id];
+    
+    [AFRequest GetRequestWithUrl:NiceFood_Url parameters:par andBlock:^(NSDictionary *Datas, NSError *error) {
+        if (error == nil) {
+            
+            NSLog(@"商区解析成功");
+            
+            _areaClassModel = [AreaClassModel objectWithKeyValues:Datas];
+            
+            NSMutableArray *host = [NSMutableArray array];//暂存热门商区数据
+            
+            //解析热门商区集合
+            for (NSDictionary *dic in _areaClassModel.hostShopareaList) {
+                [host addObject:dic[@"shopareaName"]];
+            }
+            [_areaSecondArray addObject:host];//添加热门商区的二级菜单
+            
+            for (int i = 0; i < _areaClassModel.data.count; i++) {
+                
+                NSDictionary *dic = _areaClassModel.data[i];
+                
+                [_areaArray addObject:dic[@"area"]];//往商区一级菜单中添加数据
+                
+                NSString *str = [[NSString alloc] initWithFormat:@"全部%@",dic[@"area"]];
+                NSMutableArray *temp = [[NSMutableArray alloc] initWithObjects:str, nil];
+                
+                for (NSDictionary *dic2 in dic[@"shopareaList"]) {  //解析商区集合
+                    
+                    [temp addObject:dic2[@"shopareaName"]];
+                }
+                [_areaSecondArray addObject:temp];//将数组添加进二级菜单数组
+            }
+            
+            if (_screenIndex == 1) {        //确保两个筛选集合都加载完毕再显示UI
+                [self addScreenButtonView];
+//            [self chrysanthemumClosed];
+            } else {
+                _screenIndex += 1;
+            }
+            
+            
+        } else {
+            [self chrysanthemumClosed];
+            [self open];
+            [self showMsg:@"加载失败"];
+        }
+    }];
+    
+//    行业分类
+    par = [Parameter getIndustryClassifyList];
+    
+    [AFRequest GetRequestWithUrl:NiceFood_Url parameters:par andBlock:^(NSDictionary *Datas, NSError *error) {
+        if (error == nil) {
+            NSLog(@"行业解析成功" );
+            //        解析行业数组集合
+            _industryClassModel = [IndustryClassModel objectWithKeyValues:Datas];
+            
+            for (NSDictionary *dic in _industryClassModel.industryClassifyList) {
+                
+                [_classArray addObject:dic[@"industryClassifyName"]];//向一级数组添加数据
+                
+                NSString *str = [[NSString alloc] initWithFormat:@"全部%@",dic[@"industryClassifyName"]];
+                NSMutableArray *temp = [[NSMutableArray alloc] initWithObjects:str, nil];
+                for (NSDictionary *dic2 in dic[@"childList"]) {
+                    
+                    [temp addObject:dic2[@"industryClassifyName"]];
+                }
+                [_classSecondArray addObject:temp];
+            }
+            
+            if (_screenIndex == 1) {            ////确保两个筛选集合都加载完毕再显示UI
+                [self addScreenButtonView];
+                //            [self chrysanthemumClosed];
+            } else {
+                _screenIndex += 1;
+            }
+        } else {
+        
+            [self chrysanthemumClosed];
+            [self open];
+            [self showMsg:@"加载失败"];
+        }
+    }];
+}
+
+//初始化筛选栏
+- (void)addScreenButtonView{
+    
+    _searchInfo = [Parameter getNearShopListWithAreaDatas:_areaClassModel classDatas:_industryClassModel areaIndex:0 areaSecondIndex:0 classIndex:1 classSecondIndex:0 typeIndex:0 pageIndex:self.pageIndex];
+    
+    _screen = [[ScreenButtonView alloc] init];
+    
+    _screen.areaArray = _areaArray;
+    _screen.areaSecondArray = _areaSecondArray;
+    _screen.classArray = _classArray;
+    _screen.classSecondArray = _classSecondArray;
+    _screen.typeArray = _typeArray;
+    _screen.areaClassModel = _areaClassModel;
+    _screen.industryClassModel = _industryClassModel;
+    
+    [_firstView addSubview:_screen];
+    [self reloadList];
+}
+
+- (void)reloadList{ //刷新列表数据
+//    [self nearHttpRequestWithParameters:_parameterDic];
+    NSLog(@"刷新数据");
+    
+    
+    BOOL reg = [_cloudSearch nearbySearchWithSearchInfo:_searchInfo];
+    if (reg) {
+        NSLog(@"成功");
+    } else {
+        NSLog(@"失败");
+        [self chrysanthemumClosed];
+        [self open];
+        [self showMsg:@"数据加载失败"];
+    }
+    
+}
+
+// 初始化翻转动画View
+- (void)addAnimationView{
+    CGFloat H = self.tabBarController.tabBar.frame.size.height;
+    _animationView = [[UIView alloc] initWithFrame:CGRectMake(0, NavigationH, SCREEN_WIDTH, SCREEN_HEIGHT - NavigationH - H)];
+    _animationView.backgroundColor = [UIColor whiteColor];
+    
+}
+
+// 初始化第一View
+- (void)addfirstView{
+    _firstView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.animationView.frame.size.width, self.animationView.frame.size.height)];
+    [_animationView addSubview:_firstView];
+    self.automaticallyAdjustsScrollViewInsets =NO;
+    
+}
+
+#pragma mark -- TableView的代理方法
+
+
+
+- (ShopListCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    ShopListCell *cell = [ShopListCell cellWithTableView:tableView];
+    ShopListModel *model = _showData[indexPath.row];
+    cell.model = model;
+    return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return _showData.count;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 92;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (kkNickDicPHP == nil || [UserId isEqualToString:@""]) {
+        
+        LoginViewController *loginPublic = [[LoginViewController alloc]init];
+        [self.navigationController pushViewController:loginPublic animated:YES];
+    } else {
+        
+        ListTableViewController * list = [[ListTableViewController alloc]init];
+        //商户id到这
+
+        ShopListModel *model = _showData[indexPath.row];
+        list.ownerId = [NSString stringWithFormat:@"%ld", model.autoid];        
+//        list.ownerId  = @"102";
+        [self.navigationController pushViewController:list  animated:YES];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if (_showData == nil) {
+        [self chrysanthemumOpen];
+    }
+    _cloudSearch.delegate = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getNearNotification:) name:@"near" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getLocationNotification:) name:@"location" object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"near" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"location" object:nil];
+    _cloudSearch.delegate = nil;
+    [super viewWillDisappear:animated];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"near" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"location" object:nil];
+}
+
+@end

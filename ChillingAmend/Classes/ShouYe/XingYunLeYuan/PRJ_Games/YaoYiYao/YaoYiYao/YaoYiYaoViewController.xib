@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YaoYiYaoViewController">
+            <connections>
+                <outlet property="AleltMZView" destination="WaF-aB-M0Y" id="S1H-QY-paf"/>
+                <outlet property="AleltZView" destination="Iv4-z0-WKU" id="gMh-lm-heD"/>
+                <outlet property="BackGroundImageView" destination="hBS-4z-isM" id="0GD-YD-WkZ"/>
+                <outlet property="ExchangeView" destination="XvY-tc-lU8" id="IKr-bN-agb"/>
+                <outlet property="ScrollView" destination="XYK-Hc-KdV" id="Euq-hS-aGo"/>
+                <outlet property="consumeLabel" destination="wMc-NC-dta" id="PRD-VI-59x"/>
+                <outlet property="helpView" destination="CxQ-Dr-du6" id="rm3-IK-o2S"/>
+                <outlet property="moreView" destination="t9P-ym-qEL" id="yZU-W1-Lca"/>
+                <outlet property="prizeImageView" destination="GVC-8U-QTJ" id="hhX-Qg-XhP"/>
+                <outlet property="prizeNameLabel" destination="Apg-mz-eha" id="iiI-Qp-hSk"/>
+                <outlet property="rulesTextView" destination="GSS-4C-OM6" id="GTL-cW-LYq"/>
+                <outlet property="shakeAnimationImageView" destination="kzP-04-HID" id="xHb-Lo-SwY"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outletCollection property="allButtons" destination="YPH-7e-u07" id="CKb-Or-zPo"/>
+                <outletCollection property="allButtons" destination="q7z-aZ-FjE" id="alv-u5-CFp"/>
+                <outletCollection property="allButtons" destination="A8P-iw-z1v" id="eF5-Iy-CED"/>
+                <outletCollection property="allButtons" destination="7gd-7t-88V" id="clG-1X-ah8"/>
+                <outletCollection property="allButtons" destination="cB1-s8-SAX" id="Ttq-o1-qRG"/>
+                <outletCollection property="allButtons" destination="mMB-2U-jva" id="ODT-Mg-zYo"/>
+                <outletCollection property="allButtons" destination="DgX-22-ajf" id="EeQ-3R-7MN"/>
+                <outletCollection property="allButtons" destination="CCB-6r-4LS" id="KDR-mW-hne"/>
+                <outletCollection property="allButtons" destination="B82-ZI-TJo" id="8dG-kJ-03i"/>
+                <outletCollection property="allButtons" destination="7cQ-3U-B41" id="xh8-6O-di5"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" id="LVD-lX-uhY">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="YPH-7e-u07">
+                            <rect key="frame" x="8" y="17" width="40" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <inset key="contentEdgeInsets" minX="6" minY="6" maxX="7" maxY="7"/>
+                            <state key="normal" image="public_title_btn_back_normal.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="UbuttonSender:" destination="-1" eventType="touchUpInside" id="Pn5-H9-wzs"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="摇一摇" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZmY-Wc-MkG">
+                            <rect key="frame" x="132" y="23" width="56" height="27"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="q7z-aZ-FjE">
+                            <rect key="frame" x="272" y="17" width="40" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <inset key="contentEdgeInsets" minX="6" minY="6" maxX="7" maxY="7"/>
+                            <state key="normal" image="public_title_btn_question-mark_gengduo.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="UbuttonSender:" destination="-1" eventType="touchUpInside" id="UnW-pj-S3g"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="XYK-Hc-KdV">
+                    <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" id="3n1-mv-vNr">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="503"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lexiaoyao_content_bg_Begin_selected.png" id="hBS-4z-isM">
+                                    <rect key="frame" x="10" y="0.0" width="300" height="495"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <animations/>
+                                </imageView>
+                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lexiaoyao_content_bg_default.png" highlightedImage="lexiaoyao_content_bg_default.png" id="ExQ-Zk-whn">
+                                    <rect key="frame" x="20" y="16" width="280" height="300"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <animations/>
+                                </imageView>
+                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lexiaoyao_content_bg_default_shoji.png" id="Rcf-o7-fqD">
+                                    <rect key="frame" x="71" y="107" width="178" height="149"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <animations/>
+                                </imageView>
+                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lexiaoyao_content_bg_default_shoji_0000_.png" id="kzP-04-HID">
+                                    <rect key="frame" x="120" y="107" width="77" height="149"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <animations/>
+                                </imageView>
+                                <button opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="A8P-iw-z1v">
+                                    <rect key="frame" x="91" y="368" width="139" height="38"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <animations/>
+                                    <state key="normal" backgroundImage="lexiaoyao_middle_content_img_default.png"/>
+                                </button>
+                            </subviews>
+                            <animations/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <gestureRecognizers/>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="2cj-MU-qXU" appends="YES" id="cro-Um-crH"/>
+                            </connections>
+                        </view>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </scrollView>
+                <view hidden="YES" contentMode="scaleToFill" id="CxQ-Dr-du6">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lexiaoyao_public_middle_content_img_normal3.png" id="Nfu-Cc-zQH">
+                            <rect key="frame" x="13" y="70" width="294" height="378"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lexiaoyao_content_ico_default3.png" id="meb-Bd-EuY">
+                            <rect key="frame" x="37" y="123" width="20" height="20"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <animations/>
+                        </imageView>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="GSS-4C-OM6">
+                            <rect key="frame" x="40" y="143" width="240" height="264"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="0.68627450980000004" green="0.1176470588" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="活动规则" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ayk-0b-O1T">
+                            <rect key="frame" x="65" y="123" width="91" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.68627450980000004" green="0.1176470588" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="声明 游戏中提供的奖品与苹果公司无关" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XrN-e7-6yG">
+                            <rect key="frame" x="81" y="420" width="187" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <color key="textColor" red="0.68627450980000004" green="0.1176470588" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7gd-7t-88V">
+                            <rect key="frame" x="43" y="427" width="36" height="36"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <state key="normal" backgroundImage="lexiaoyao_public_middle_content_btn_normal_back.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="UbuttonSender:" destination="-1" eventType="touchUpInside" id="fBC-3J-9tE"/>
+                            </connections>
+                        </button>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="声明" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4br-qf-Gdk">
+                            <rect key="frame" x="87" y="407" width="152" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <color key="textColor" red="0.68627450980000004" green="0.1176470588" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+                <view hidden="YES" alpha="0.0" contentMode="scaleToFill" id="XvY-tc-lU8">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="peidui_public_content_bg_default.png" id="f1g-Tm-hor">
+                            <rect key="frame" x="32" y="176" width="258" height="109"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="确认要兑换摇一摇次数吗？" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JKD-h8-LAb">
+                            <rect key="frame" x="52" y="198" width="219" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wMc-NC-dta">
+                            <rect key="frame" x="51" y="226" width="219" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" red="0.68627450980000004" green="0.1176470588" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cB1-s8-SAX">
+                            <rect key="frame" x="85" y="265" width="40" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <state key="normal" backgroundImage="public_middle_content_btn_normal_cancel.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="UbuttonSender:" destination="-1" eventType="touchUpInside" id="7no-Dm-fyo"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mMB-2U-jva">
+                            <rect key="frame" x="185" y="265" width="40" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <state key="normal" backgroundImage="public_middle_content_btn_normal_ok_sure.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="UbuttonSender:" destination="-1" eventType="touchUpInside" id="KBu-zO-AP1"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view hidden="YES" alpha="0.0" contentMode="scaleToFill" id="WaF-aB-M0Y">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lexiaoyao_public_middle_content_img_normal2.png" id="1th-YA-iFq">
+                            <rect key="frame" x="38" y="98" width="245" height="241"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lexiaoyao_public_content_btn_default.png" id="ZNc-kj-azx">
+                            <rect key="frame" x="130" y="154" width="60" height="60"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                        </imageView>
+                        <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DgX-22-ajf">
+                            <rect key="frame" x="56" y="287" width="105" height="35"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <state key="normal" backgroundImage="public_middle_content_btn_normal_share.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="UbuttonSender:" destination="-1" eventType="touchUpInside" id="YvM-th-VTh"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="可以再次参与获取抽奖机会" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="t1W-pX-jbE">
+                            <rect key="frame" x="73" y="250" width="175" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="CCB-6r-4LS">
+                            <rect key="frame" x="160" y="287" width="104" height="35"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <state key="normal" backgroundImage="lexiaoyao_public_content_btn_normal_again.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted" backgroundImage="lexiaoyao_public_content_btn_selected_again.png"/>
+                            <connections>
+                                <action selector="UbuttonSender:" destination="-1" eventType="touchUpInside" id="fch-ce-AD5"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="没中奖！" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KB3-lb-SMW">
+                            <rect key="frame" x="102" y="228" width="116" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view hidden="YES" alpha="0.0" contentMode="scaleToFill" id="Iv4-z0-WKU">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lexiaoyao_public_middle_content_img_normal1.png" id="ium-V5-w10">
+                            <rect key="frame" x="27" y="98" width="266" height="277"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="public_middle_content_ico_normal.png" id="GVC-8U-QTJ">
+                            <rect key="frame" x="87" y="215" width="146" height="93"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lexiaoyao_bg_img_middle_normal.png" id="fPo-fU-rbx">
+                            <rect key="frame" x="87" y="215" width="146" height="93"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                        </imageView>
+                        <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="B82-ZI-TJo">
+                            <rect key="frame" x="56" y="320" width="105" height="35"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <state key="normal" backgroundImage="public_middle_content_btn_normal_share.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="UbuttonSender:" destination="-1" eventType="touchUpInside" id="Mia-CA-OYn"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7cQ-3U-B41">
+                            <rect key="frame" x="160" y="320" width="105" height="35"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <state key="normal" backgroundImage="lexiaoyao_public_content_btn_normal_again.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted" backgroundImage="lexiaoyao_public_content_btn_selected_again.png"/>
+                            <connections>
+                                <action selector="UbuttonSender:" destination="-1" eventType="touchUpInside" id="hE1-tc-ZPk"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="太给力了！亲~" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xGS-JZ-BOD">
+                            <rect key="frame" x="101" y="158" width="116" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="获得" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dEf-N8-M9G">
+                            <rect key="frame" x="92" y="183" width="42" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Apg-mz-eha">
+                            <rect key="frame" x="133" y="183" width="129" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.68627450980000004" green="0.1176470588" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view hidden="YES" contentMode="scaleToFill" id="t9P-ym-qEL">
+                    <rect key="frame" x="229" y="55" width="88" height="104"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="public_pop_bg_question_mark_gengduo.png" id="BdJ-e9-OJM">
+                            <rect key="frame" x="0.0" y="0.0" width="88" height="104"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <animations/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="public_pop_line.png" id="THJ-AW-ipG">
+                            <rect key="frame" x="2" y="58" width="84" height="1"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="public_pop_btn_fenxiang.png" id="FHO-jh-u85">
+                            <rect key="frame" x="13" y="28" width="15" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="public_pop_btn_bangzhu.png" id="Sbv-Kk-tvA">
+                            <rect key="frame" x="15" y="72" width="11" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="分享" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MCe-Pw-mkF">
+                            <rect key="frame" x="36" y="26" width="42" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.40784313729999999" green="0.40784313729999999" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="VUF-KG-6lO" userLabel="分享">
+                            <rect key="frame" x="8" y="18" width="72" height="41"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <state key="normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="UbuttonSender:" destination="-1" eventType="touchUpInside" id="Ouk-aK-pq3"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="帮助" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bdz-fM-Rzw">
+                            <rect key="frame" x="36" y="70" width="42" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.40784313729999999" green="0.40784313729999999" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Dwm-lh-4dn" userLabel="帮助">
+                            <rect key="frame" x="8" y="60" width="72" height="41"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <state key="normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="UbuttonSender:" destination="-1" eventType="touchUpInside" id="oz7-W6-e8w"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="415" y="200"/>
+        </view>
+        <tapGestureRecognizer id="2cj-MU-qXU">
+            <connections>
+                <action selector="hideAllSubViews:" destination="-1" id="U08-0D-0RG"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="lexiaoyao_bg_img_middle_normal.png" width="246" height="199"/>
+        <image name="lexiaoyao_content_bg_Begin_selected.png" width="597" height="679"/>
+        <image name="lexiaoyao_content_bg_default.png" width="557" height="612"/>
+        <image name="lexiaoyao_content_bg_default_shoji.png" width="358" height="301"/>
+        <image name="lexiaoyao_content_bg_default_shoji_0000_.png" width="161" height="301"/>
+        <image name="lexiaoyao_content_ico_default3.png" width="41" height="41"/>
+        <image name="lexiaoyao_middle_content_img_default.png" width="277" height="66"/>
+        <image name="lexiaoyao_public_content_btn_default.png" width="113" height="118"/>
+        <image name="lexiaoyao_public_content_btn_normal_again.png" width="209" height="68"/>
+        <image name="lexiaoyao_public_content_btn_selected_again.png" width="209" height="68"/>
+        <image name="lexiaoyao_public_middle_content_btn_normal_back.png" width="69" height="72"/>
+        <image name="lexiaoyao_public_middle_content_img_normal1.png" width="479" height="523"/>
+        <image name="lexiaoyao_public_middle_content_img_normal2.png" width="478" height="471"/>
+        <image name="lexiaoyao_public_middle_content_img_normal3.png" width="585" height="757"/>
+        <image name="peidui_public_content_bg_default.png" width="494" height="246"/>
+        <image name="public_middle_content_btn_normal_cancel.png" width="95" height="97"/>
+        <image name="public_middle_content_btn_normal_ok_sure.png" width="95" height="98"/>
+        <image name="public_middle_content_btn_normal_share.png" width="211" height="69"/>
+        <image name="public_middle_content_ico_normal.png" width="240" height="194"/>
+        <image name="public_pop_bg_question_mark_gengduo.png" width="175" height="208"/>
+        <image name="public_pop_btn_bangzhu.png" width="22" height="33"/>
+        <image name="public_pop_btn_fenxiang.png" width="29" height="33"/>
+        <image name="public_pop_line.png" width="165" height="2"/>
+        <image name="public_title_btn_back_normal.png" width="54" height="53"/>
+        <image name="public_title_btn_question-mark_gengduo.png" width="54" height="54"/>
+    </resources>
+</document>

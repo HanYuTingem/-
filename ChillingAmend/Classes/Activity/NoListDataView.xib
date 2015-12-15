@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="dFR-8s-K9d" customClass="NoListDataView">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="快去*活动场*pia~pia~的参加活动吧" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbl-BN-AkN">
+                    <rect key="frame" x="8" y="311" width="584" height="21"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="39m-zD-R4y"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.24313725489999999" green="0.24313725489999999" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="目前还没有参加过任何活动哦" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9w0-23-J1a">
+                    <rect key="frame" x="8" y="282" width="584" height="21"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="WU8-Kc-QyQ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.24313725489999999" green="0.24313725489999999" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h7W-ZN-BhM">
+                    <rect key="frame" x="241" y="382" width="119" height="30"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.99607843139999996" green="0.74901960779999999" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="abx-Zi-AUN"/>
+                        <constraint firstAttribute="width" constant="119" id="mig-XR-qHN"/>
+                    </constraints>
+                    <state key="normal" title="去看看活动">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ActionImage2.png" translatesAutoresizingMaskIntoConstraints="NO" id="oLc-cE-e75">
+                    <rect key="frame" x="228" y="125" width="145" height="117"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="145" id="HAx-vL-MvI"/>
+                        <constraint firstAttribute="height" constant="117" id="aQb-8t-6qc"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="9w0-23-J1a" firstAttribute="top" secondItem="oLc-cE-e75" secondAttribute="bottom" constant="40" id="1Zo-Hg-Fv4"/>
+                <constraint firstAttribute="centerY" secondItem="oLc-cE-e75" secondAttribute="centerY" constant="117" id="KuN-8L-xfE"/>
+                <constraint firstAttribute="centerX" secondItem="h7W-ZN-BhM" secondAttribute="centerX" id="MYg-Vc-uTR"/>
+                <constraint firstItem="h7W-ZN-BhM" firstAttribute="top" secondItem="dbl-BN-AkN" secondAttribute="bottom" constant="50" id="UGd-B8-rik"/>
+                <constraint firstAttribute="trailing" secondItem="9w0-23-J1a" secondAttribute="trailing" constant="8" id="Ymx-2V-kQw"/>
+                <constraint firstAttribute="centerX" secondItem="oLc-cE-e75" secondAttribute="centerX" id="bV9-x2-3NL"/>
+                <constraint firstItem="9w0-23-J1a" firstAttribute="leading" secondItem="dFR-8s-K9d" secondAttribute="leading" constant="8" id="e08-Ct-1CR"/>
+                <constraint firstAttribute="trailing" secondItem="dbl-BN-AkN" secondAttribute="trailing" constant="8" id="h7t-dT-VmN"/>
+                <constraint firstItem="dbl-BN-AkN" firstAttribute="leading" secondItem="dFR-8s-K9d" secondAttribute="leading" constant="8" id="jyo-er-1Ih"/>
+                <constraint firstItem="dbl-BN-AkN" firstAttribute="top" secondItem="9w0-23-J1a" secondAttribute="bottom" constant="8" id="quc-Vc-aRl"/>
+            </constraints>
+            <connections>
+                <outlet property="intoActionList" destination="h7W-ZN-BhM" id="BMQ-il-tif"/>
+                <outlet property="oneLable" destination="9w0-23-J1a" id="Yep-CY-l7K"/>
+                <outlet property="twoLable" destination="dbl-BN-AkN" id="Xgf-Wr-s8x"/>
+            </connections>
+            <point key="canvasLocation" x="272" y="699"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ActionImage2.png" width="291" height="234"/>
+    </resources>
+</document>

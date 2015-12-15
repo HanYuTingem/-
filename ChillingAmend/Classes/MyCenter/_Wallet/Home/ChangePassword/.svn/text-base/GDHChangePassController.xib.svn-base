@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GDHChangePassController">
+            <connections>
+                <outlet property="changePassWordButton" destination="Ki1-0p-m3b" id="i1w-eM-IOm"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3G8-cQ-aGZ">
+                    <rect key="frame" x="0.0" y="74" width="320" height="45"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ojg-mV-8fW">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="0.5" id="P8Q-Fp-Sal"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="修改支付密码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nhv-Wy-RJM">
+                            <rect key="frame" x="18" y="12" width="100" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="1SF-rC-S7L"/>
+                                <constraint firstAttribute="height" constant="21" id="tR9-oA-LfC"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jga-1K-csR">
+                            <rect key="frame" x="0.0" y="44" width="320" height="1"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="0.5" id="iQX-Qh-vZb"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="content_btn_more.png" translatesAutoresizingMaskIntoConstraints="NO" id="SBI-2i-nPh">
+                            <rect key="frame" x="300" y="14" width="8" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="8" id="FTs-Lm-G0O"/>
+                                <constraint firstAttribute="height" constant="17" id="yHV-Kj-Xld"/>
+                            </constraints>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ki1-0p-m3b">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
+                            <state key="normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="changePassWordBtnDown:" destination="-1" eventType="touchUpInside" id="md6-PM-GF2"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="ojg-mV-8fW" firstAttribute="top" secondItem="3G8-cQ-aGZ" secondAttribute="top" id="1vA-xX-e7V"/>
+                        <constraint firstAttribute="trailing" secondItem="ojg-mV-8fW" secondAttribute="trailing" id="64l-ut-P20"/>
+                        <constraint firstItem="nhv-Wy-RJM" firstAttribute="top" secondItem="ojg-mV-8fW" secondAttribute="bottom" constant="11" id="7fL-dK-Ncg"/>
+                        <constraint firstAttribute="centerY" secondItem="SBI-2i-nPh" secondAttribute="centerY" id="DXi-8T-dAd"/>
+                        <constraint firstItem="Ki1-0p-m3b" firstAttribute="top" secondItem="3G8-cQ-aGZ" secondAttribute="top" id="DuC-Mk-1NJ"/>
+                        <constraint firstItem="ojg-mV-8fW" firstAttribute="leading" secondItem="3G8-cQ-aGZ" secondAttribute="leading" id="QBa-dh-yRI"/>
+                        <constraint firstItem="nhv-Wy-RJM" firstAttribute="leading" secondItem="3G8-cQ-aGZ" secondAttribute="leading" constant="18" id="TAO-tO-fgg"/>
+                        <constraint firstAttribute="trailing" secondItem="Ki1-0p-m3b" secondAttribute="trailing" id="TWS-L6-jpH"/>
+                        <constraint firstAttribute="trailing" secondItem="SBI-2i-nPh" secondAttribute="trailing" constant="12" id="aga-JH-neE"/>
+                        <constraint firstAttribute="trailing" secondItem="Jga-1K-csR" secondAttribute="trailing" id="buZ-yw-I1v"/>
+                        <constraint firstItem="Ki1-0p-m3b" firstAttribute="leading" secondItem="3G8-cQ-aGZ" secondAttribute="leading" id="df7-Ua-dyT"/>
+                        <constraint firstAttribute="bottom" secondItem="Ki1-0p-m3b" secondAttribute="bottom" id="eCi-g7-GFq"/>
+                        <constraint firstAttribute="height" constant="45" id="giq-45-3af"/>
+                        <constraint firstItem="Jga-1K-csR" firstAttribute="leading" secondItem="3G8-cQ-aGZ" secondAttribute="leading" id="ihS-D2-e2i"/>
+                        <constraint firstAttribute="bottom" secondItem="Jga-1K-csR" secondAttribute="bottom" id="xmq-l8-7ry"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="3G8-cQ-aGZ" secondAttribute="trailing" id="Vw1-dp-0B3"/>
+                <constraint firstItem="3G8-cQ-aGZ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="74" id="aHh-y2-Gvf"/>
+                <constraint firstItem="3G8-cQ-aGZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="g8q-el-ttw"/>
+            </constraints>
+            <point key="canvasLocation" x="445" y="382"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="content_btn_more.png" width="8" height="13"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
