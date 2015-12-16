@@ -534,7 +534,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                     <animations/>
                                 </imageView>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="personal_content_ico_mall" id="M25-bi-au4">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="钱包.png" id="M25-bi-au4">
                                     <rect key="frame" x="16" y="57" width="23" height="23"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <animations/>
@@ -606,5 +606,6 @@
         <image name="personal_content_ico_mall" width="23" height="23"/>
         <image name="personal_content_ico_reservations" width="23" height="23"/>
         <image name="personal_content_ico_takeout" width="23" height="23"/>
+        <image name="钱包.png" width="23" height="23"/>
     </resources>
 </document>

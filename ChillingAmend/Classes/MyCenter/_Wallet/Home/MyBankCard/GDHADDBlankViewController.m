@@ -96,6 +96,7 @@
     [SINOAFNetWorking postWithBaseURL:url controller:self success:^(id json) {
         NSLog(@"%@",json);
         
+        
         NSDictionary *dict = json;
         if ([dict[@"code"] isEqualToString:@"100"]) {
             

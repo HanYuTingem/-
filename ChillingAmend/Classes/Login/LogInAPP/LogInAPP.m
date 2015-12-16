@@ -50,6 +50,13 @@
     return mutableDictionary;
 }
 
+
+
+
+
+
+
+
 //发送验证码
 +(NSMutableDictionary *)getVerificationCode:(NSString *)cellphone type:(NSString *)type{
     NSLog(@"%@findCode/?id=%@&type=%@",ADDRESS,cellphone,type);

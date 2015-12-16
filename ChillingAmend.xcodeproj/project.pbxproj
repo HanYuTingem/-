@@ -158,8 +158,6 @@
 		34608DC31C0EC1A500EC1B46 /* GDHRsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 34608DC21C0EC1A500EC1B46 /* GDHRsModel.m */; };
 		34608DCB1C0EC24400EC1B46 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 34608DC71C0EC24400EC1B46 /* Localizable.strings */; };
 		347778BD1C1E96C300C1C4AA /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 347778BA1C1E96C300C1C4AA /* Contents.json */; };
-		347778BE1C1E96C300C1C4AA /* personal_content_ico_wallet-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 347778BB1C1E96C300C1C4AA /* personal_content_ico_wallet-1.png */; };
-		347778BF1C1E96C300C1C4AA /* 钱包.png in Resources */ = {isa = PBXBuildFile; fileRef = 347778BC1C1E96C300C1C4AA /* 钱包.png */; };
 		348BA5271C17FF9D004B76CF /* title_btn_back02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348BA5261C17FF9D004B76CF /* title_btn_back02@2x.png */; };
 		348CB91F1C113B5B00FE97E8 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 348CB8FF1C113B5B00FE97E8 /* MKAnnotationView+WebCache.m */; };
 		348CB9201C113B5B00FE97E8 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 348CB9011C113B5B00FE97E8 /* NSData+ImageContentType.m */; };
@@ -327,6 +325,8 @@
 		34E1F54B1C17DE2D00AA9955 /* GDHPasswordBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34E1F5451C17DE2D00AA9955 /* GDHPasswordBox.xib */; };
 		34E1F54C1C17DE2D00AA9955 /* SINOUIkeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E1F5471C17DE2D00AA9955 /* SINOUIkeyboardView.m */; };
 		34E1F54D1C17DE2D00AA9955 /* UITextField+JianPan.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E1F5491C17DE2D00AA9955 /* UITextField+JianPan.m */; };
+		34F377C81C20F95800B2DC3F /* 钱包@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F377C61C20F95800B2DC3F /* 钱包@2x.png */; };
+		34F377C91C20F95800B2DC3F /* 钱包@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F377C71C20F95800B2DC3F /* 钱包@3x.png */; };
 		34F3AB741C1A7BD600F59C2B /* ZHLoginInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F3AB731C1A7BD600F59C2B /* ZHLoginInfoManager.m */; };
 		34F3AE3A1C1A80E700F59C2B /* 0_jiaozi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F3AD371C1A80E600F59C2B /* 0_jiaozi@2x.png */; };
 		34F3AE3B1C1A80E700F59C2B /* 0_jiaozi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F3AD381C1A80E600F59C2B /* 0_jiaozi@3x.png */; };
@@ -2081,8 +2081,6 @@
 		34608DC71C0EC24400EC1B46 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		34608DC81C0EC24400EC1B46 /* PublicAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicAPI.h; sourceTree = "<group>"; };
 		347778BA1C1E96C300C1C4AA /* Contents.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
-		347778BB1C1E96C300C1C4AA /* personal_content_ico_wallet-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "personal_content_ico_wallet-1.png"; sourceTree = "<group>"; };
-		347778BC1C1E96C300C1C4AA /* 钱包.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "钱包.png"; sourceTree = "<group>"; };
 		348BA5261C17FF9D004B76CF /* title_btn_back02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "title_btn_back02@2x.png"; path = "ChillingAmend/Classes/MyCenter/_Wallet/HomeWalletImage/钱包切图/title_btn_back02@2x.png"; sourceTree = SOURCE_ROOT; };
 		348CB8FE1C113B5B00FE97E8 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		348CB8FF1C113B5B00FE97E8 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
@@ -2373,6 +2371,8 @@
 		34E1F5471C17DE2D00AA9955 /* SINOUIkeyboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SINOUIkeyboardView.m; sourceTree = "<group>"; };
 		34E1F5481C17DE2D00AA9955 /* UITextField+JianPan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+JianPan.h"; sourceTree = "<group>"; };
 		34E1F5491C17DE2D00AA9955 /* UITextField+JianPan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+JianPan.m"; sourceTree = "<group>"; };
+		34F377C61C20F95800B2DC3F /* 钱包@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "钱包@2x.png"; sourceTree = "<group>"; };
+		34F377C71C20F95800B2DC3F /* 钱包@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "钱包@3x.png"; sourceTree = "<group>"; };
 		34F3AB721C1A7BD600F59C2B /* ZHLoginInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHLoginInfoManager.h; sourceTree = "<group>"; };
 		34F3AB731C1A7BD600F59C2B /* ZHLoginInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHLoginInfoManager.m; sourceTree = "<group>"; };
 		34F3AD371C1A80E600F59C2B /* 0_jiaozi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "0_jiaozi@2x.png"; sourceTree = "<group>"; };
@@ -5042,9 +5042,9 @@
 		347778B91C1E96C300C1C4AA /* personal_content_ico_wallet.imageset */ = {
 			isa = PBXGroup;
 			children = (
+				34F377C61C20F95800B2DC3F /* 钱包@2x.png */,
+				34F377C71C20F95800B2DC3F /* 钱包@3x.png */,
 				347778BA1C1E96C300C1C4AA /* Contents.json */,
-				347778BB1C1E96C300C1C4AA /* personal_content_ico_wallet-1.png */,
-				347778BC1C1E96C300C1C4AA /* 钱包.png */,
 			);
 			name = personal_content_ico_wallet.imageset;
 			path = ChillingAmend/Classes/MyCenter/_Wallet/HomeWalletImage/personal_content_ico_wallet.imageset;
@@ -11385,7 +11385,6 @@
 				0A43DDBB1A47C679009836C6 /* myaboutus_content_btn_gray_selected.png in Resources */,
 				0A43DE071A47FE8A009836C6 /* MessageTableViewCell.xib in Resources */,
 				34F3AE4A1C1A80E700F59C2B /* 2_banner@2x.png in Resources */,
-				347778BE1C1E96C300C1C4AA /* personal_content_ico_wallet-1.png in Resources */,
 				34608DB11C0EC03000EC1B46 /* GDHAccountTableViewCell.xib in Resources */,
 				A48A2DCC1BCCB4FE000369A5 /* LSYImageDetailsViewController.xib in Resources */,
 				34DE412C1C0EC805005C86EE /* content_spanner_back@2x.png in Resources */,
@@ -11678,6 +11677,7 @@
 				0AD6BC1F1A5BAF4D00ABD967 /* zhuanpan_content_img_default3.png in Resources */,
 				5854AA981B8B1A3E0019CA73 /* SINOActionListTableViewCell.xib in Resources */,
 				A4A40D651BA123AC003AD835 /* map_0004_fanh.png in Resources */,
+				34F377C91C20F95800B2DC3F /* 钱包@3x.png in Resources */,
 				A48A2D381BCCB4FD000369A5 /* DHWondefulTJCell.xib in Resources */,
 				A48A2E051BCCB4FE000369A5 /* defaultimg_11@3x.png in Resources */,
 				A4A40D2A1BA123AC003AD835 /* settingmessagelogin_function_radiobutton_s.png in Resources */,
@@ -11716,7 +11716,6 @@
 				0A2B60061A427B18001211AA /* c2share_content_btn_selected.png in Resources */,
 				0A27AE651A481197005C7221 /* activity_pop_btn_guanbi.png in Resources */,
 				A4A40CBE1BA123AC003AD835 /* activity_content_btn_more.png in Resources */,
-				347778BF1C1E96C300C1C4AA /* 钱包.png in Resources */,
 				0A43DDBD1A47C679009836C6 /* myaboutus_content_btn_red_selected.png in Resources */,
 				A48A2E1F1BCCB4FE000369A5 /* arrow@2x.png in Resources */,
 				347778BD1C1E96C300C1C4AA /* Contents.json in Resources */,
@@ -11889,6 +11888,7 @@
 				0A8861E51AB677D700456DDC /* b101.png in Resources */,
 				D9A3C4991A44146900F421A5 /* videohome_gallery_bg.png in Resources */,
 				A4A40D371BA123AC003AD835 /* settingmessagelogin_segmentation_bg.png in Resources */,
+				34F377C81C20F95800B2DC3F /* 钱包@2x.png in Resources */,
 				0A43DE001A47FE8A009836C6 /* CollectionViewController.xib in Resources */,
 				D97E817E1A592F5000E8CBA9 /* lexiaoyao_content_bg_default2.png in Resources */,
 				D944EB4B1A41194F00DA5B6A /* bottomMenu_btn_Game_selected.png in Resources */,
