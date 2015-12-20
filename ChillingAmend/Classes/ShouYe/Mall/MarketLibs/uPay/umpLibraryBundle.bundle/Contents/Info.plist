@@ -6,8 +6,6 @@
 	<string>14C81f</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
-	<key>CFBundleExecutable</key>
-	<string>umpLibraryBundle</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.umpay.umpLibraryBundle</string>
 	<key>CFBundleInfoDictionaryVersion</key>

@@ -247,8 +247,8 @@
                     NSDictionary *resultDic = (NSDictionary *)[dict objectForKey:@"result"];
                     [SaveMessage saveUserMessageJava:resultDic];
                     if (APPLICATION == 1) {
-                       // promptView.InTheFormOfInt = 1;
-                        //promptView.hidden = NO;
+//                        promptView.InTheFormOfInt = 1;
+//                        promptView.hidden = NO;
                     }else{
                         mainRequest.tag = 104;
                         [mainRequest requestHttpWithPost:[NSString stringWithFormat:@"%@",ADDRESSPHP] withDict:[LogInAPP accessToLoginInformationUserId:[resultDic objectForKey:@"id"] userName:[resultDic objectForKey:@"userName"] sex:[resultDic objectForKey:@"sex"] nickName:[resultDic objectForKey:@"nickname"] src:[resultDic objectForKey:@"src"] jifen:@"0"status:[resultDic objectForKey:@"status"] lat:@"" ing:@"" token:@""]];
@@ -422,7 +422,7 @@
         //yc20150629DLZC-50【注册】验证码只能在没有完全实现注册只能用一次，所以把if条件判断语句去掉
 //        if (timeInt > 0) {
         promptLabel.hidden = YES;
-        [mainRequest requestHttpWithPost:[NSString stringWithFormat:@"%@validateLoginCode/",ADDRESS] withDict:[LogInAPP verifyTheVerificationCodeUserName:numberTextField.text vcode:validationTextView.text type:interfaceInt == 1?@"1":(interfaceInt == 2?@"3":(interfaceInt == 3?@"2":@"1"))]];
+        [mainRequest requestHttpWithPost:[NSString stringWithFormat:@"%@authValidateLoginCode/",ADDRESS] withDict:[LogInAPP verifyTheVerificationCodeUserName:numberTextField.text vcode:validationTextView.text type:interfaceInt == 1?@"1":(interfaceInt == 2?@"3":(interfaceInt == 3?@"2":@"1"))]];
         }
 //    }
     

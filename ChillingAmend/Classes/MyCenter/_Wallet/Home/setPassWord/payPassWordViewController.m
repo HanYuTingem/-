@@ -12,6 +12,8 @@
 #import "GDHPassWordModel.h"
 #import "mineWalletViewController.h"
 #import "SecurityUtil.h"
+#import "CJCashViewController.h"
+
 @interface payPassWordViewController ()
 {
     GDHPasswordBox *passWord;
@@ -71,7 +73,13 @@
         passWordString = theNumString;
         
     };
-    passWord.titleLabel.text = @"请输入支付密码";
+    if (self.changePassWord.length > 0) {
+        passWord.titleLabel.text = @"请输入新支付密码";
+        
+    }else{
+        passWord.titleLabel.text = @"请设置6位数字支付密码";
+    }
+
     
     [self.view addSubview:passWord];
     
@@ -81,7 +89,12 @@
     confirmPayPassWord.passWordBlock =^(NSString *theNumString){
         confirmPayPassWordString = theNumString;
     };
-    confirmPayPassWord.titleLabel.text = @"确认支付密码";
+    if (self.changePassWord.length >0) {
+        confirmPayPassWord.titleLabel.text = @"确认新支付密码";
+    }else {
+        confirmPayPassWord.titleLabel.text = @"确认支付密码";
+    }
+
     [self.view addSubview:confirmPayPassWord];
 
     
@@ -143,15 +156,31 @@
         [SINOAFNetWorking postWithBaseURL:Url controller:self success:^(id json) {
             [self chrysanthemumClosed];
             NSDictionary *dic = json;
-            
+            NSUserDefaults *userD =[NSUserDefaults standardUserDefaults];
+            [userD setObject:@"Y" forKey:HasPassWord];
+            [userD synchronize];
+
             
             NSLog(@"dic   : %@",dic);
             if ([dic[@"code"] isEqualToString:@"100"]) {
                 if ([dic[@"rs"] isEqualToString:@"OK"]) {
                     [self setPassWordBox];
                     [self savePassWord];
-                    [self poptoWalletHomeControllet];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"PASSWORLD" object:nil];
+                    if (self.fromVcToSetPassWord.length > 0) {
+                        [self NSNotifitionCJCashViewController];
+                        [self poptoWalletHomeControllet:[CJCashViewController class]];
+                    }else{
+                        if (self.changePassWord.length > 0) {
+                            
+                            [self NSNotifitionhWalletHomeViewController:@"支付密码修改成功！"];
+                            
+                        }else{
+                            [self NSNotifitionhWalletHomeViewController:@"支付密码设置成功！"];
+                        }
+                        [self poptoWalletHomeControllet:[mineWalletViewController class]];
+
+
+                    }
 
                 }
             }else if ([dic[@"code"] isEqualToString:@"102"]){
@@ -167,6 +196,14 @@
     }];
     
 }
+/**  通知钱包首页 支付密码修改成功 */
+-(void)NSNotifitionhWalletHomeViewController:(NSString *)Prompt{
+    
+    NSDictionary *dict = @{@"Prompt":Prompt};
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"PASSWORLD" object:nil userInfo:dict];
+}
+
+
 
 /** 密码框提示 */
 -(void)setPassWordBox{
@@ -182,12 +219,17 @@
     model.payPassword = confirmPayPassWordString;
     [GDHPassWordModel save:model];
 }
+/**  通知到提现页面 */
+-(void)NSNotifitionCJCashViewController{
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"CJCashViewController" object:nil];
+}
 
 /** 返回首页 */
--(void)poptoWalletHomeControllet{
+-(void)poptoWalletHomeControllet:(Class )vc{
     NSArray  * viewControls= self.navigationController.viewControllers;
     for (UIViewController * viewControl  in viewControls){
-        if([viewControl isKindOfClass:[mineWalletViewController class]]){
+        if([viewControl isKindOfClass:vc]){
             [self.navigationController popToViewController:viewControl animated:YES];
             return;
         }

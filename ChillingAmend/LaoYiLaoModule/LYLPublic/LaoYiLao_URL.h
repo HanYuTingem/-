@@ -16,26 +16,29 @@
 //点击更多的链接
 #define ClickMoreUrl @"http://vote.sinosns.cn/app/index"
 
-
-//分享的测试地址
-#define URL_LYL_SHARE  @"http://192.168.10.86:8082/shareTemplate/"
-//捞饺子测试地址
-#define URL_LYL_SERVER @"http://192.168.10.86:8099/dumpling/"
-//用户中心测试地址 URL
-#define URL_LYL_SINOCENTER    @"http://192.168.10.86:8081/sinoCenter/"
-//活动规则测试地址
-#define URL_LYL_ActiveRule  @"http://192.168.10.125:86/#/activeRule_APP"
-
-
-
-//////分享的正式地址
-//#define URL_LYL_SHARE  @"http://api.platshare.sinosns.cn/shareTemplate/"
-////捞饺子正式地址
+////分享的测试地址
+////#define URL_LYL_SHARE  @"http://192.168.10.86:8082/shareTemplate/"
+//#define URL_LYL_SHARE   @"http://api.platshare.sinosns.cn/shareTemplate/"
+////捞饺子测试地址
+////#define URL_LYL_SERVER @"http://192.168.10.86:8099/dumpling/"
 //#define URL_LYL_SERVER @"http://api.dumpling.sinosns.cn/dumpling/"
-////用户中心正式地址 URL
-//#define URL_LYL_SINOCENTER @"http://api.ucenter.sinosns.cn/"
-////活动规则线上地址
+////用户中心测试地址 URL
+//#define URL_LYL_SINOCENTER    @"http://192.168.10.86:8081/sinoCenter/"
+////活动规则测试地址
+////#define URL_LYL_ActiveRule  @"http://192.168.10.125:86/#/activeRule_APP"
+//
 //#define URL_LYL_ActiveRule @"http://dump.sinosns.cn/#/activeRule_APP"
+
+
+
+////分享的正式地址
+#define URL_LYL_SHARE  @"http://api.platshare.sinosns.cn/shareTemplate/"
+//捞饺子正式地址
+#define URL_LYL_SERVER @"http://api.dumpling.sinosns.cn/dumpling/"
+//用户中心正式地址 URL
+#define URL_LYL_SINOCENTER @"http://api.ucenter.sinosns.cn/"
+//活动规则线上地址
+#define URL_LYL_ActiveRule @"http://dump.sinosns.cn/#/activeRule_APP"
 
 //1001. 显示当前饺子剩余总数量
 #define NowDumplingNumber @"nowDumplingNumber?"
@@ -79,7 +82,7 @@
 #define LYL_validateLogin @"findCode?"
 
 //1204 验证码登录  POST
-#define LYL_QucikLogin @"validateLoginCode?"
+#define LYL_QucikLogin @"authValidateLoginCode?"
 
 //1206 获取用户协议和账号说明
 #define LYL_GetAgreement @"getAgreement?"

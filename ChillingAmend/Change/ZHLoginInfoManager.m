@@ -15,14 +15,22 @@
 
 //    [SaveMessage saveUserMessagePHP:json];
 //    
-//    [kkUserInfo resetInfo:[[NSUserDefaults standardUserDefaults]objectForKey:usernameMessagePHP]];
-//    [BSaveMessage saveUserMessage:[[NSUserDefaults standardUserDefaults]objectForKey:usernameMessagePHP]];
-//    [GCUtil savejifenWithJifen:[[[NSUserDefaults standardUserDefaults]objectForKey:usernameMessagePHP] objectForKey:@"jifen"]];
+    [kkUserInfo resetInfo:[[NSUserDefaults standardUserDefaults]objectForKey:usernameMessagePHP]];
+    [BSaveMessage saveUserMessage:[[NSUserDefaults standardUserDefaults]objectForKey:usernameMessagePHP]];
+    [GCUtil saveLajiaobijifenWithJifen:[[[NSUserDefaults standardUserDefaults]objectForKey:usernameMessagePHP] objectForKey:@"jifen"]];
 }
 
 + (void)addSaveJavaCacheInLoginWithJson:(id)json{
     
         ZHLog(@"java登陆信息%@",json);
+    NSDictionary *dict = (NSDictionary *)json;
+    NSMutableDictionary *resultDic = [NSMutableDictionary dictionaryWithDictionary:(NSDictionary *)[dict objectForKey:@"result"]];
+    NSArray *arr = [resultDic allKeysForObject:[NSNull null]];
+    [arr enumerateObjectsUsingBlock:^(NSString* obj, NSUInteger idx, BOOL *stop) {
+        [resultDic setObject:@"" forKey:arr[idx]];
+    }];
+    [SaveMessage saveUserMessageJava:resultDic];
+    [SaveMessage saveUserMessagePHP:json];
 }
 
 

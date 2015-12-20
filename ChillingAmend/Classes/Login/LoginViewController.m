@@ -243,7 +243,7 @@
     }else{
         [self showMsg:nil];
         mainRequest.tag = 100;
-        [mainRequest requestHttpWithPost:[NSString stringWithFormat:@"%@login/",ADDRESS] withDict:[LogInAPP loginUserName:userTextField.text andpwd:passwordTextield.text]];
+        [mainRequest requestHttpWithPost:[NSString stringWithFormat:@"%@authlogin/",ADDRESS] withDict:[LogInAPP loginUserName:userTextField.text andpwd:passwordTextield.text]];
     }
 }
 
@@ -285,7 +285,7 @@
             NSDictionary *resultDic01 = (NSDictionary *)[dict objectForKey:@"result"];
             if (aRequest.tag == 100) {
                 NSDictionary *resultDic = (NSDictionary *)[dict objectForKey:@"result"];
-//                [SaveMessage saveUserMessageJava:resultDic];
+                [SaveMessage saveUserMessageJava:resultDic];
 //                [BSaveMessage saveUserMessage:resultDic];
 //                [[BSaveMessage Share] resetInfo:resultDic];
 //                [SaveMessage saveUserMessage:resultDic];

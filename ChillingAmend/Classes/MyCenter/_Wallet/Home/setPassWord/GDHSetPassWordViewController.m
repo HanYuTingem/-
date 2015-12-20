@@ -103,7 +103,7 @@
         self.sendButton.enabled = YES;
         [self.time  invalidate];
         self.time = nil;
-        [self.sendButton setTitle:@"发送验证码" forState:UIControlStateNormal];
+        [self.sendButton setTitle:@"获取验证码" forState:UIControlStateNormal];
     }
 }
 
@@ -122,6 +122,8 @@
         return;
     }
     payPassWordViewController *payPassWord = [[payPassWordViewController alloc] init];
+    payPassWord.fromVcToSetPassWord = self.fromVcToSetPassWord;
+
     [self.navigationController pushViewController:payPassWord animated:YES];
 }
 @end

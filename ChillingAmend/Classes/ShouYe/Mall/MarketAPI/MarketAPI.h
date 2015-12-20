@@ -110,11 +110,11 @@
 #define  ReCharge  @"http://sjchongzhi.sinosns.cn/app.jsp"
 
 //测试
-//#define  ReCharge  @"http://192.168.10.86:9011/top-up/app.jsp?"
+//#define  ReCharge  @"http://192.168.10.86:9011/top-up/app.jsp"
 
 //test测试
-//#define  ReCharge  @"http://java.test.sinosns.cn/top-up/app.jsp?"
-#define  CHONGZHI  @"2e9f4615-3ef5-479b-bca7-c8458a2b6d21"
+//#define  ReCharge  @"http://java.test.sinosns.cn/top-up/app.jsp"
+#define  CHONGZHI  LOGO
 
 
 @interface MarketAPI : NSObject

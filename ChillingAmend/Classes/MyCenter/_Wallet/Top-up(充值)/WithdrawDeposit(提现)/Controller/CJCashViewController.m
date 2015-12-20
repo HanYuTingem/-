@@ -226,7 +226,9 @@ static NSString *ID = @"cashCell";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(infoAction)name:UITextFieldTextDidChangeNotification object:nil];
     
-    
+    //CJCashViewController
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CJCashViewController) name:@"CJCashViewController" object:nil];
+
     //设置提示框的圆角
     self.reminderView.layer.masksToBounds = YES;
     self.reminderView.layer.cornerRadius = 3;
@@ -648,6 +650,8 @@ static NSString *ID = @"cashCell";
     titleView.ReleaseBoundBlock = ^(UIButton *ReleaseBound){
         /** 去设置*/
         GDHSetPassWordViewController *setPassWord = [[GDHSetPassWordViewController alloc] init];
+        setPassWord.fromVcToSetPassWord = @"未设置密码，提现，设置了密码后返回提现界面";
+
         [self.navigationController pushViewController:setPassWord animated:YES];
         btn.hidden = YES;
     };
@@ -775,6 +779,12 @@ static NSString *ID = @"cashCell";
 //    _inputButton.hidden = YES;
 }
 
+-(void)CJCashViewController{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self showMsg:@"设置密码成功！"];
+        btn.hidden = YES;
+    });
+}
 
 
 @end

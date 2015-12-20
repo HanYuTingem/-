@@ -29,5 +29,8 @@
 /** 确定按钮 事件  */
 - (IBAction)theconfirmButtonDown:(id)sender;
 
+/**  未设置密码，提现，设置了密码后返回提现界面 */
+
+@property (nonatomic,copy) NSString *fromVcToSetPassWord;
 
 @end

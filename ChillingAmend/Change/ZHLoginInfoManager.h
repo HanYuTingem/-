@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 //登陆的type
-#define LOGINGTYPE 1 //1 只调java 2. 先调java后调php 不同app类型不同
+#define LOGINGTYPE 2 //1 只调java 2. 先调java后调php 不同app类型不同
 #define ProductCode @"XN01_LNTV_HT"   //每个app对应自己的产品标识
 
 //应用需要传入的Key
@@ -25,11 +25,11 @@
 
 
 //Php登陆正式接口 不同app接口不同需要更改
-//#define WZHLogingPHPWithUrl @"http://cqtv.sinosns.cn/app/"
+#define WZHLogingPHPWithUrl @"http://ht.sinosns.cn/app/"
 
 
 //Php登陆测试接口 不同app接口不同需要更改
-#define WZHLogingPHPWithUrl @"http://192.168.10.11:2019/app/"
+//#define WZHLogingPHPWithUrl @"http://192.168.10.11:2019/app/"
 
 
 @interface ZHLoginInfoManager : NSObject

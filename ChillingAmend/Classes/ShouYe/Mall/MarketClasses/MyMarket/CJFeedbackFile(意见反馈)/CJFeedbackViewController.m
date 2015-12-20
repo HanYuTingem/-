@@ -113,19 +113,19 @@
     _placeHolderLabel.text = @"遇到什么系统问题啦？或有什么功能建议吗？欢迎您提给我们～";
     [_feedbackTextView addSubview:_placeHolderLabel];
     
-    if ([[_feedbackTextView text] length] == 0) {
-        [[_feedbackTextView viewWithTag:999] setAlpha:1];
-    }
+//    if ([[_feedbackTextView text] length] == 0) {
+//        [[_feedbackTextView viewWithTag:999] setAlpha:1];
+//    }
 }
 /** textView 改变的监听事件 */
 - (void)textChanged:(NSNotification *)notification
 {
-    if ([[_feedbackTextView text] length] == 0) {
-        [[_feedbackTextView viewWithTag:999] setAlpha:1];
-    } else {
-        [[_feedbackTextView viewWithTag:999] setAlpha:0];
-        
-    }
+//    if ([[_feedbackTextView text] length] == 0) {
+//        [[_feedbackTextView viewWithTag:999] setAlpha:1];
+//    } else {
+//        [[_feedbackTextView viewWithTag:999] setAlpha:0];
+//        
+//    }
 }
 
 #pragma mark - 点击事件  网络请求

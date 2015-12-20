@@ -220,6 +220,7 @@
         LYLLoginModel * loginModel = [LYLLoginModel getLYLLoginModelWithDic:json];
         if ([[json objectForKey:@"code"] intValue] == 1) {//登陆成功
             
+            
             MySetObjectForKey(loginModel.resultModel.id,UserIDKey);//保存登陆用户的id
             MySetObjectForKey(_quickLoginView.phonetextfield.text, LoginPhoneKey);//保存手机号
             ZHLog(@"LYLuserID == %@,LYLPhone == %@",LYLUserId,LYLPhone);
@@ -278,6 +279,8 @@
         NSDictionary *dict = (NSDictionary *)json;
         if ([dict[@"code"] intValue] == 1) {
             
+            [SaveMessage saveUserMessageJava:dict];
+            [SaveMessage saveUserMessagePHP:json];
             [ZHLoginInfoManager addSavePHPCacheInLoginWithJson:json];
             [self showHint:@"登陆成功"];
             [self loadDataWithNoLoginGetMoney];

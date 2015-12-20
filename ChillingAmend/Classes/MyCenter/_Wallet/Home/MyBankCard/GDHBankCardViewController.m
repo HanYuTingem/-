@@ -134,7 +134,7 @@
     UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44)];
     footView.backgroundColor = [UIColor whiteColor];
     
-//    UIView *lineUp  =[[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 0.5)];
+//    UIView *lineUp  =[[UIView a                                                                                     blloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 0.5)];
 //    lineUp.backgroundColor = [UIColor lightGrayColor];
 //    [footView addSubview:lineUp];
     UIButton *footButton = [UIButton buttonWithType:UIButtonTypeCustom];

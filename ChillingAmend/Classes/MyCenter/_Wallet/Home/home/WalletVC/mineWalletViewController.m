@@ -60,12 +60,12 @@ static int  section = 1;
     [super viewDidLoad];
     [self makeNav];
     [self makeTableView];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(thePassWordSetSuccess) name:@"PASSWORLD" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(thePassWordSetSuccess:) name:@"PASSWORLD" object:nil];
 }
 
 /** 添加用于与 捞一捞交互 */
 - (void)backButtonClick{
-    
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"popLYLVC" object:nil];
     //_backBlock();
     if([_type isEqualToString:@"1"]){
 #warning  不删除 判断，返回按钮是不是从捞一捞页面传过来
@@ -205,7 +205,13 @@ static int  section = 1;
             if (self.dataArrary.count) {
                 balance.donwLine.hidden = YES;
                 GDHMyWalletModel *model = self.dataArrary[0];
-                [balance makeRefreshUI:[NSString stringWithFormat:@"%d张",[model.bankCardNum intValue]]];
+                if ([model.bankCardNum intValue] == 0) {
+                    [balance makeRefreshUI:[NSString stringWithFormat:@"未添加"]];
+                    
+                }else{
+                    [balance makeRefreshUI:[NSString stringWithFormat:@"%d张",[model.bankCardNum intValue]]];
+                }
+
             }
             balance.selectionStyle= UITableViewCellSelectionStyleNone;
             return balance;
@@ -298,10 +304,14 @@ static int  section = 1;
 }
 
 /** 设置密码成功 */
--(void)thePassWordSetSuccess
+-(void)thePassWordSetSuccess:(NSNotification *)user
 {
+    
+    NSDictionary *dict = [user userInfo];
+    NSString *titleStr = dict[@"Prompt"];
+
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self showMsg:@"支付密码修改成功"];
+        [self showMsg:titleStr];
     });
 }
 

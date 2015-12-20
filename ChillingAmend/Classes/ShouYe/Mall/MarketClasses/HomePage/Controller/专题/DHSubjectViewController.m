@@ -10,23 +10,19 @@
 #import "MarketAPI.h"
 #import "LBase64.h"
 #import "ZXYIndicatorView.h"
+#import <JavaScriptCore/JavaScriptCore.h>
 @interface DHSubjectViewController ()<UIWebViewDelegate>
 {
-    int _count;
-    UIButton *btn;
     NSURLRequest *requestStr ;
     NSURLRequest *req;
     ZXYIndicatorView *indicatorView;
+    UIWebView *_chongzhiwebview;
 }
 @end
 
 @implementation DHSubjectViewController
 
-//-(void)viewWillDisappear:(BOOL)animated{
-//    [super viewWillDisappear:animated];
-//
-//    [[NSURLCache sharedURLCache] removeAllCachedResponses];
-//}
+
 -(void)dealloc{
     
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
@@ -44,22 +40,15 @@
     [self webView];
     // Do any additional setup after loading the view.
 }
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self ) {
-        _count = 0;
-    }
-    return self;
-}
+
 /** 网页 */
 -(void)webView{
     
     
-    UIWebView *webview = [[UIWebView alloc] initWithFrame:CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20)];
-    [self.view addSubview:webview];
-    webview.tag = 7777;
-    webview.delegate = self;
+    _chongzhiwebview = [[UIWebView alloc] initWithFrame:CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20)];
+    [self.view addSubview:_chongzhiwebview];
+    _chongzhiwebview.tag = 7777;
+    _chongzhiwebview.delegate = self;
     
     NSLog(@"%@",kkUserCenterId);
     
@@ -68,35 +57,41 @@
     [indicatorView showIndicator];
     
     
-    NSString *urlStr = [NSString stringWithFormat:@"%@?userId=%@&productKey=%@",self.URL,base64ID,CHONGZHI];
+    //    NSString *urlStr = [NSString stringWithFormat:@"%@?userId=%@&productKey=%@",self.URL,base64ID,CHONGZHI];
+    //    NSString *urlString = [[SaveMessage getAuthUserId] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *urlString = [self encodeString:[SaveMessage getAuthUserId]];
+    NSString *urlStr = [NSString stringWithFormat:@"%@?userId=%@&productKey=%@&level=2&sys=2",self.URL,urlString,CHONGZHI];
     NSURL *url = [NSURL URLWithString:urlStr];
     //    NSURLRequest *req = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
     
-    //    NSURLRequest *qq = [NSURLRequest requestWithURL:<#(NSURL *)#> cachePolicy:<#(NSURLRequestCachePolicy)#> timeoutInterval:<#(NSTimeInterval)#>]
     req = [NSURLRequest requestWithURL:url];
-    
-    //    req.timeoutInterval = 10.f;
     [self loadData:req];
     
-    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn addTarget:self action:@selector(backDown) forControlEvents:UIControlEventTouchUpInside];
-    btn.frame = CGRectMake(0, 20, 44, 44);
-    btn.hidden= YES;
-    [self.view addSubview:btn];
+}
+
+- (NSString*)encodeString:(NSString*)unencodedString{
+    
+    // CharactersToBeEscaped = @":/?&=;+!@#$()~',*";
+    // CharactersToLeaveUnescaped = @"[].";
+    
+    NSString *encodedString = (NSString *)
+    CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                              (CFStringRef)unencodedString,
+                                                              NULL,
+                                                              (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                              kCFStringEncodingUTF8));
+    
+    return encodedString;
 }
 
 
 -(void)loadData :(NSURLRequest* )urlStr{
     NSLog(@"%@",urlStr);
     
-    UIWebView *webview = (UIWebView *)[self.view viewWithTag:7777];
-    webview.hidden = NO;
+    _chongzhiwebview.hidden = NO;
     UIView *view= (UIView *)[self.view viewWithTag:5555];
     view.hidden = YES;
-    [webview loadRequest:urlStr];
-}
--(void)backDown{
-    [self.navigationController popViewControllerAnimated:YES];
+    [_chongzhiwebview loadRequest:urlStr];
 }
 
 -(void)makeError{
@@ -174,16 +169,12 @@
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
     [indicatorView hideIndicator];
-    
-    if (_count==0) {
-        _count++;
-        btn.hidden = NO;
-    }else{
-        
-        _count--;
-        btn.hidden = YES;
-    }
-    NSLog(@"%d",_count);
+    JSContext *context=[webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
+    __block DHSubjectViewController *actionVC = self;
+    //fenx_ios('',share_content,share_url,share_img) 标题  内容  链接  图片
+    context[@"goBack"] = ^() {
+        [actionVC.navigationController popViewControllerAnimated:YES];
+    };
 }
 
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
@@ -200,19 +191,6 @@
     requestStr = request;
     return YES;
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

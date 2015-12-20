@@ -64,19 +64,27 @@
 #import "MJExtension.h"
 #import "NSObject+SBJSON.h"
 
-#define user_ID  [[NSUserDefaults standardUserDefaults]objectForKey:@"user"]
-
+//#define user_ID  [[NSUserDefaults standardUserDefaults]objectForKey:@"user"]
+#define user_ID kkUserCenterId
+#define walletUserTel kkUserName
 #define payMask RGBACOLOR(83, 83, 83, .7)
 
 
-#define walletMybankimh_UrL                @"http://192.168.10.86:9902"
-
+//#define walletMybankimh_UrL                @"http://192.168.10.86:9902"
+#define walletMybankimh_UrL    @"http://img.sinosns.cn/wallet_img/"
 
 /** 钱包  地址*/
-#define   WalletHttp                       @"http://192.168.10.86:8091/"
+//#define   WalletHttp                       @"http://192.168.10.86:8091/"
+#define   WalletHttp       @"http://wallet.a.sinosns.cn/"
 /** 加密服务器地址 */
-#define   WalletHttp_encryption            @"http://192.168.10.86:8093/"
+//#define   WalletHttp_encryption            @"http://192.168.10.86:8093/"
+#define   WalletHttp_encryption     @"http://encrypt.sinosns.cn/"
 
+//#define walletMybankimh_UrL                @"http://img.sinosns.cn/wallet_img/"
+/** 钱包正式地址 */
+//#define    WalletHttp                       @"http://wallet.a.sinosns.cn/"
+/** 秘钥线上地址 */
+//#define   WalletHttp_encryption            @"http://encrypt.sinosns.cn/"
 
 
 //#define   WalletHttp_TopUp                 @"http://192.168.10.162:8091/"
